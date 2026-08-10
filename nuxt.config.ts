@@ -2,6 +2,25 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css'],
+  modules: ['@nuxtjs/i18n'],
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en.json'
+      },
+      {
+        code: 'sr',
+        name: 'Srpski',
+        file: 'sr.json'
+      }
+    ],
+    defaultLocale: 'en',
+    lazy: true,
+    langDir: 'locales',
+    strategy: 'prefix_except_default'
+  },
   app: {
     head: {
       title: '1-2-3 Fuel Serbia',

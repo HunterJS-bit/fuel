@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "map": "Map",
+    "list": "List",
+    "trends": "Trends",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "badge": "Serbia's #1 Fuel Price Tracker",
+    "title": "Find & Compare Fuel with 1-2-3 Fuel. Save on every fill-up.",
+    "subtitle": "Fast and reliable way to compare diesel, petrol, and LPG prices across 500+ stations in Serbia.",
+    "getStarted": "Get Started",
+    "browsePrices": "Browse Prices"
+  },
+  "widget": {
+    "title": "Fuel Savings Calculator",
+    "fuelType": "Fuel Type",
+    "liters": "Liters to fill",
+    "saveVsAverage": "You save vs. average",
+    "findCheapest": "Find Cheapest Station"
+  },
+  "companies": {
+    "badge": "Featured fuel brands",
+    "title": "Top Fuel Company Price Updates",
+    "subtitle": "Compare live prices from Serbia's leading fuel retailers. Updated every hour.",
+    "lowest": "Lowest",
+    "stations": "stations",
+    "viewAll": "View all →"
+  },
+  "trusted": {
+    "title": "Trusted by drivers across",
+    "country": "Serbia"
+  },
+  "steps": {
+    "title": "Get started in a few minutes",
+    "step1": {
+      "title": "Open the map",
+      "desc": "See live fuel prices on an interactive map of Serbia."
+    },
+    "step2": {
+      "title": "Compare stations",
+      "desc": "Filter by brand, fuel type, and distance from your location."
+    },
+    "step3": {
+      "title": "Navigate & save",
+      "desc": "Drive to the cheapest station and keep more money in your pocket."
+    }
+  },
+  "features": {
+    "title": "Create your fuel savings plan today",
+    "subtitle": "1-2-3 Fuel has everything you need to spend less at the pump",
+    "liveMap": {
+      "title": "Live price map",
+      "desc": "See real-time diesel, petrol, and LPG prices on an interactive dark-themed map."
+    },
+    "calculator": {
+      "title": "Savings calculator",
+      "desc": "Calculate exactly how much you save by choosing the cheapest station nearby."
+    },
+    "trends": {
+      "title": "Price trends",
+      "desc": "Track historical price movements and spot the best time to fill up."
+    },
+    "mobile": {
+      "title": "Mobile ready",
+      "desc": "Access fuel prices on the go — works perfectly on any phone or tablet."
+    }
+  },
+  "cta": {
+    "title": "Ready to save on your next fill-up?",
+    "subtitle": "Join thousands of drivers who compare prices before they pump.",
+    "button": "Open Live Map"
+  },
+  "footer": {
+    "brand": "Track, compare, and save on fuel prices across Serbia.",
+    "product": "Product",
+    "companies": "Companies",
+    "support": "Support",
+    "liveMap": "Live Map",
+    "stationList": "Station List",
+    "priceTrends": "Price Trends",
+    "faq": "FAQ",
+    "reportPrice": "Report Price",
+    "contact": "Contact",
+    "copyright": "© 2026 1-2-3 Fuel. All rights reserved."
+  },
+  "fuelTypes": {
+    "eurodiesel": "Euro Diesel",
+    "bmb95": "BMB 95",
+    "lpg": "LPG"
+  }
+}

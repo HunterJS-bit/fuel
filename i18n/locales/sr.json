@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "map": "Mapa",
+    "list": "Lista",
+    "trends": "Trendovi",
+    "getStarted": "Započni"
+  },
+  "hero": {
+    "badge": "Broj 1 praćenje cena goriva u Srbiji",
+    "title": "Pronađite i uporedite gorivo sa 1-2-3 Fuel. Uštedite na svakom punjenju.",
+    "subtitle": "Brz i pouzdan način da uporedite cene dizela, benzina i autogasa na preko 500+ stanica u Srbiji.",
+    "getStarted": "Započni",
+    "browsePrices": "Pregledaj cene"
+  },
+  "widget": {
+    "title": "Kalkulator uštede goriva",
+    "fuelType": "Tip goriva",
+    "liters": "Litara za punjenje",
+    "saveVsAverage": "Ušteda u odnosu na prosek",
+    "findCheapest": "Pronađi najjeftiniju stanicu"
+  },
+  "companies": {
+    "badge": "Istaknute brendove goriva",
+    "title": "Ažuriranje cena vodećih kompanija",
+    "subtitle": "Uporedite žive cene od vodećih prodavaca goriva u Srbiji. Ažurirano svakog sata.",
+    "lowest": "Najniža",
+    "stations": "stanica",
+    "viewAll": "Pogledaj sve →"
+  },
+  "trusted": {
+    "title": "Poverenje vozačima širom",
+    "country": "Srbije"
+  },
+  "steps": {
+    "title": "Započnite za nekoliko minuta",
+    "step1": {
+      "title": "Otvorite mapu",
+      "desc": "Vidite žive cene goriva na interaktivnoj mapi Srbije."
+    },
+    "step2": {
+      "title": "Uporedite stanice",
+      "desc": "Filtrirajte po brendu, tipu goriva i udaljenosti od vaše lokacije."
+    },
+    "step3": {
+      "title": "Navigirajte i uštedite",
+      "desc": "Vožite do najjeftinije stanice i zadržite više novca u džepu."
+    }
+  },
+  "features": {
+    "title": "Napravite plan uštede goriva danas",
+    "subtitle": "1-2-3 Fuel ima sve što vam treba da manje trošite na pumpi",
+    "liveMap": {
+      "title": "Mapa živih cena",
+      "desc": "Vidite cene dizela, benzina i autogasa u realnom vremenu na interaktivnoj mapi."
+    },
+    "calculator": {
+      "title": "Kalkulator uštede",
+      "desc": "Izračunajte tačno koliko uštedite biranjem najjeftinije stanice u blizini."
+    },
+    "trends": {
+      "title": "Trendovi cena",
+      "desc": "Pratite istorijska kretanja cena i pronađite najbolje vreme za punjenje."
+    },
+    "mobile": {
+      "title": "Spremno za mobilne",
+      "desc": "Pristupite cenama goriva u pokretu — savršeno radi na bilo kom telefonu ili tabletu."
+    }
+  },
+  "cta": {
+    "title": "Spremni da uštedite na sledećem punjenju?",
+    "subtitle": "Pridružite se hiljadama vozača koji upoređuju cene pre punjenja.",
+    "button": "Otvori živu mapu"
+  },
+  "footer": {
+    "brand": "Pratite, upoređujte i uštedite na cenama goriva širom Srbije.",
+    "product": "Proizvod",
+    "companies": "Kompanije",
+    "support": "Podrška",
+    "liveMap": "Živa mapa",
+    "stationList": "Lista stanica",
+    "priceTrends": "Trendovi cena",
+    "faq": "ČPP",
+    "reportPrice": "Prijavi cenu",
+    "contact": "Kontakt",
+    "copyright": "© 2026 1-2-3 Fuel. Sva prava zadržana."
+  },
+  "fuelTypes": {
+    "eurodiesel": "Euro Dizel",
+    "bmb95": "BMB 95",
+    "lpg": "Autogas"
+  }
+}

@@ -1,30 +1,52 @@
 :root {
-  --primary: #00e676;
-  /* vibrant lime/spring green */
-  --primary-glow: rgba(0, 230, 118, 0.3);
-  --secondary: #0a251c;
-  /* deep forest green */
-  --bg-color: #061711;
-  --panel-bg: #0a251c;
-  --text-main: #ffffff;
-  --text-muted: #a3b8b0;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --danger: #ff4757;
-  --glass-bg: rgba(10, 37, 28, 0.7);
+  /* Tradix-inspired light blue theme (default) */
+  --primary: #3861fb;
+  --primary-hover: #2d4fd4;
+  --primary-glow: rgba(56, 97, 251, 0.25);
+  --primary-subtle: rgba(56, 97, 251, 0.08);
+  --primary-border: rgba(56, 97, 251, 0.2);
+  --secondary: #1e293b;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --bg-color: #f8f9fc;
+  --panel-bg: #ffffff;
+  --text-main: #1a1a2e;
+  --text-muted: #64748b;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --hover-bg: rgba(0, 0, 0, 0.04);
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.12);
+  --on-primary: #ffffff;
+  --landing-nav-bg: rgba(255, 255, 255, 0.95);
+  --landing-hero-bg: #ffffff;
+  --landing-section-alt: #f1f4f9;
+  --map-tiles: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 }
 
-html.light-mode {
-  --primary: #0a251c;
-  /* reverse: primary is deep green */
-  --primary-glow: rgba(10, 37, 28, 0.2);
-  --secondary: #00e676;
-  --bg-color: #f4fcf9;
-  /* very soft mint green */
-  --panel-bg: #ffffff;
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.9);
+html.dark-mode {
+  --primary: #5b7cfa;
+  --primary-hover: #7090ff;
+  --primary-glow: rgba(91, 124, 250, 0.3);
+  --primary-subtle: rgba(91, 124, 250, 0.12);
+  --primary-border: rgba(91, 124, 250, 0.25);
+  --secondary: #e2e8f0;
+  --success: #4ade80;
+  --danger: #f87171;
+  --bg-color: #0f1419;
+  --panel-bg: #1a2332;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(26, 35, 50, 0.88);
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-strong: rgba(0, 0, 0, 0.5);
+  --on-primary: #ffffff;
+  --landing-nav-bg: rgba(15, 20, 25, 0.92);
+  --landing-hero-bg: #0f1419;
+  --landing-section-alt: rgba(26, 35, 50, 0.6);
+  --map-tiles: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 }
 
 * {
@@ -39,29 +61,25 @@ body {
   color: var(--text-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-/* Utilities */
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 24px var(--shadow-color);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .glow-text {
-  text-shadow: 0 0 10px var(--primary-glow);
+  color: var(--primary);
 }
 
 .price-tag {
@@ -78,7 +96,6 @@ h5 {
   margin-left: 2px;
 }
 
-/* Layout */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -92,7 +109,6 @@ h5 {
   position: relative;
 }
 
-/* Map Overrides */
 .leaflet-container {
   background-color: var(--bg-color) !important;
   font-family: 'Outfit', sans-serif;
@@ -109,10 +125,9 @@ h5 {
   background: var(--panel-bg);
 }
 
-/* Buttons */
 .btn-primary {
   background: var(--primary);
-  color: #000;
+  color: var(--on-primary);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -123,16 +138,16 @@ h5 {
 }
 
 .btn-primary:hover {
+  background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 230, 118, 0.5);
+  box-shadow: 0 6px 20px var(--primary-glow);
 }
 
-/* Navigation - Modified to support horizontal layout */
 .nav-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--text-main);
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
@@ -152,7 +167,6 @@ h5 {
   color: var(--primary);
 }
 
-/* Transitions */
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.3s, transform 0.3s;

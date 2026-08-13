@@ -177,5 +177,11 @@
     "ctaSubtitle": "Naš tim je ovde da vam pomogne da uštedite na svakom punjenju.",
     "contactUs": "Kontaktirajte podršku",
     "findStation": "Pronađite stanicu"
+  },
+  "error": {
+    "title": "Stranica nije pronađena",
+    "message": "Stranica koju tražite ne postoji ili je premeštena. Vratimo vas na pravi put.",
+    "goHome": "Idite na početnu",
+    "viewMap": "Pogledajte mapu"
   }
 }

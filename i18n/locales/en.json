@@ -177,5 +177,11 @@
     "ctaSubtitle": "Our team is here to help you save on every fill-up.",
     "contactUs": "Contact Support",
     "findStation": "Find a Station"
+  },
+  "error": {
+    "title": "Page Not Found",
+    "message": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    "goHome": "Go Home",
+    "viewMap": "View Map"
   }
 }

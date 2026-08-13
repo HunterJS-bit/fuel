@@ -1,30 +1,5 @@
 <template>
   <div class="contact-page">
-    <!-- Navigation -->
-    <header class="landing-nav">
-      <div class="nav-inner">
-        <NuxtLink to="/" class="brand">
-          <span class="brand-icon">⛽</span>
-          <span class="brand-name">1-2-3 <em>Fuel</em></span>
-        </NuxtLink>
-
-        <nav class="nav-links">
-          <NuxtLink to="/map">{{ $t('nav.map') }}</NuxtLink>
-          <NuxtLink to="/list">{{ $t('nav.list') }}</NuxtLink>
-          <NuxtLink to="/prices">{{ $t('nav.trends') }}</NuxtLink>
-          <NuxtLink to="/contact">{{ $t('nav.contact') }}</NuxtLink>
-        </nav>
-
-        <div class="nav-actions">
-          <LanguageSwitcher />
-          <button class="theme-btn" @click="toggleTheme" title="Toggle theme">
-            <svg v-if="isDark" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" fill="currentColor"/></svg>
-            <svg v-else viewBox="0 0 24 24" width="18" height="18"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z" fill="currentColor"/></svg>
-          </button>
-        </div>
-      </div>
-    </header>
-
     <!-- Hero Section -->
     <section class="contact-hero">
       <div class="hero-inner">
@@ -136,46 +111,15 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="landing-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <span class="brand-name">1-2-3 <em>Fuel</em></span>
-          <p>{{ $t('footer.brand') }}</p>
-        </div>
-        <div class="footer-links">
-          <h4>{{ $t('footer.product') }}</h4>
-          <NuxtLink to="/map">{{ $t('footer.liveMap') }}</NuxtLink>
-          <NuxtLink to="/list">{{ $t('footer.stationList') }}</NuxtLink>
-          <NuxtLink to="/prices">{{ $t('footer.priceTrends') }}</NuxtLink>
-        </div>
-        <div class="footer-links">
-          <h4>{{ $t('footer.companies') }}</h4>
-          <a href="#">NIS Petrol</a>
-          <a href="#">OMV</a>
-          <a href="#">MOL</a>
-          <a href="#">Lukoil</a>
-        </div>
-        <div class="footer-links">
-          <h4>{{ $t('footer.support') }}</h4>
-          <a href="#">{{ $t('footer.faq') }}</a>
-          <a href="#">{{ $t('footer.reportPrice') }}</a>
-          <NuxtLink to="/contact">{{ $t('footer.contact') }}</NuxtLink>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>{{ $t('footer.copyright') }}</span>
-      </div>
-    </footer>
   </div>
 </template>
 
 <script setup>
-definePageMeta({ layout: 'landing' })
+definePageMeta({ 
+  layout: 'landing'
+})
 
-import { ref, onMounted } from 'vue'
-
-const { isDark, toggleTheme, initTheme } = useTheme()
+import { ref } from 'vue'
 
 const formData = ref({
   name: '',
@@ -201,80 +145,11 @@ const handleSubmit = () => {
   }, 5000)
 }
 
-onMounted(() => {
-  initTheme()
-})
 </script>
 
 <style scoped>
 .contact-page {
   overflow-x: hidden;
-}
-
-/* ── Navigation ── */
-.landing-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--landing-nav-bg);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-color);
-}
-.nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--text-main);
-}
-.brand-icon { font-size: 1.6rem; }
-.brand-name {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-.brand-name em {
-  color: var(--primary);
-  font-style: normal;
-}
-.nav-links {
-  display: flex;
-  gap: 32px;
-}
-.nav-links a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.nav-links a:hover,
-.nav-links a.router-link-active {
-  color: var(--primary);
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.theme-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ── Hero ── */
@@ -451,59 +326,12 @@ onMounted(() => {
   line-height: 1.5;
 }
 
-/* ── Footer ── */
-.landing-footer {
-  background: var(--panel-bg);
-  border-top: 1px solid var(--border-color);
-  padding: 60px 24px 0;
-}
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 40px;
-}
-.footer-brand p {
-  color: var(--text-muted);
-  margin-top: 12px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-.footer-links h4 {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-.footer-links a {
-  display: block;
-  color: var(--text-main);
-  text-decoration: none;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  opacity: 0.8;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--primary); opacity: 1; }
-.footer-bottom {
-  border-top: 1px solid var(--border-color);
-  padding: 20px 24px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .contact-grid { grid-template-columns: 1fr; }
   .contact-cards { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
 }
 @media (max-width: 600px) {
-  .footer-inner { grid-template-columns: 1fr; }
+  .contact-cards { grid-template-columns: 1fr; }
 }
 </style>

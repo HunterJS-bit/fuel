@@ -13,6 +13,8 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const { locale, setLocale } = useI18n()
 
 const availableLocales = [

@@ -3,6 +3,7 @@
     "map": "Map",
     "list": "List",
     "trends": "Trends",
+    "faq": "FAQ",
     "contact": "Contact",
     "getStarted": "Get Started"
   },
@@ -121,5 +122,60 @@
     "locationDesc": "Our headquarters in Belgrade",
     "webTitle": "Website",
     "webDesc": "Visit our main site"
+  },
+  "faq": {
+    "badge": "Frequently Asked Questions",
+    "title": "Everything you need to know",
+    "subtitle": "Find answers to common questions about 1-2-3 Fuel and comparing fuel prices in Serbia.",
+    "categories": {
+      "general": "General",
+      "prices": "Prices",
+      "app": "App & Features",
+      "account": "Account"
+    },
+    "q1": {
+      "question": "What is 1-2-3 Fuel?",
+      "answer": "1-2-3 Fuel is Serbia's leading fuel price comparison platform. We help you find the cheapest petrol, diesel, and LPG prices across 500+ stations in Serbia, updated in real-time."
+    },
+    "q2": {
+      "question": "How often are prices updated?",
+      "answer": "Our prices are updated every hour based on data from fuel stations across Serbia. We also rely on user reports to ensure accuracy."
+    },
+    "q3": {
+      "question": "Is 1-2-3 Fuel free to use?",
+      "answer": "Yes! 1-2-3 Fuel is completely free for all users. You can compare prices, view the map, and use all features without any cost."
+    },
+    "q4": {
+      "question": "How accurate are the fuel prices?",
+      "answer": "We strive for maximum accuracy by combining official station data with user reports. Prices are typically accurate within the last hour, but we recommend calling ahead for critical purchases."
+    },
+    "q5": {
+      "question": "Why do prices vary between stations?",
+      "answer": "Fuel prices vary based on location, competition, brand pricing strategies, and local taxes. Stations in high-traffic areas or with less competition may have higher prices."
+    },
+    "q6": {
+      "question": "Can I report incorrect prices?",
+      "answer": "Absolutely! If you notice a price discrepancy, please use our 'Report Price' feature or contact us. We verify all reports and update our database accordingly."
+    },
+    "q7": {
+      "question": "Does 1-2-3 Fuel have a mobile app?",
+      "answer": "Our platform is fully responsive and works perfectly on any mobile device. We're also developing dedicated iOS and Android apps for an even better experience."
+    },
+    "q8": {
+      "question": "How does the savings calculator work?",
+      "answer": "Our calculator compares the average fuel price in your area with the cheapest available station. It then calculates your potential savings based on how many liters you plan to fill."
+    },
+    "q9": {
+      "question": "Do I need an account to use 1-2-3 Fuel?",
+      "answer": "No account is required for basic features like viewing prices and using the map. However, creating an account allows you to save favorite stations and receive price alerts."
+    },
+    "q10": {
+      "question": "How can I save money on fuel?",
+      "answer": "The best way to save is to compare prices before filling up. Use our map to find the cheapest station near you, consider filling up during off-peak hours, and maintain your vehicle for better fuel efficiency."
+    },
+    "ctaTitle": "Still have questions?",
+    "ctaSubtitle": "Our team is here to help you save on every fill-up.",
+    "contactUs": "Contact Support",
+    "findStation": "Find a Station"
   }
 }

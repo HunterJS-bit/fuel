@@ -3,6 +3,7 @@
     "map": "Mapa",
     "list": "Lista",
     "trends": "Trendovi",
+    "faq": "ČPP",
     "contact": "Kontakt",
     "getStarted": "Započni"
   },
@@ -121,5 +122,60 @@
     "locationDesc": "Naše sedište u Beogradu",
     "webTitle": "Veb sajt",
     "webDesc": "Posetite naš glavni sajt"
+  },
+  "faq": {
+    "badge": "Često postavljana pitanja",
+    "title": "Sve što trebate da znate",
+    "subtitle": "Pronađite odgovore na uobičajena pitanja o 1-2-3 Fuel i poređenju cena goriva u Srbiji.",
+    "categories": {
+      "general": "Opšte",
+      "prices": "Cene",
+      "app": "Aplikacija i funkcije",
+      "account": "Nalog"
+    },
+    "q1": {
+      "question": "Šta je 1-2-3 Fuel?",
+      "answer": "1-2-3 Fuel je vodeća platforma za poređenje cena goriva u Srbiji. Pomažemo vam da pronađete najjeftinije benzinske, dizel i autogas cene na preko 500+ stanica u Srbiji, ažurirane u realnom vremenu."
+    },
+    "q2": {
+      "question": "Koliko često se ažuriraju cene?",
+      "answer": "Naše cene se ažuriraju svakog sata na osnovu podataka sa benzinskih stanica širom Srbije. Takođe se oslanjamo na prijave korisnika da bismo osigurali tačnost."
+    },
+    "q3": {
+      "question": "Da li je 1-2-3 Fuel besplatan za korišćenje?",
+      "answer": "Da! 1-2-3 Fuel je potpuno besplatan za sve korisnike. Možete da upoređujete cene, pregledate mapu i koristite sve funkcije bez ikakvih troškova."
+    },
+    "q4": {
+      "question": "Koliko su tačne cene goriva?",
+      "answer": "Težimo maksimalnoj tačnosti kombinovanjem zvaničnih podataka stanica sa prijavama korisnika. Cene su obično tačne u poslednjem satu, ali preporučujemo da pozovete pre kritičnih kupovina."
+    },
+    "q5": {
+      "question": "Zašto se cene razlikuju između stanica?",
+      "answer": "Cene goriva se razlikuju na osnovu lokacije, konkurencije, strategija cene brenda i lokalnih poreza. Stanice u područjima sa velikim prometom ili sa manje konkurencije mogu imati više cene."
+    },
+    "q6": {
+      "question": "Mogu li da prijavim netačne cene?",
+      "answer": "Apsolutno! Ako primetite razliku u cenama, koristite našu funkciju 'Prijavi cenu' ili nas kontaktirajte. Proveravamo sve prijave i ažuriramo našu bazu podataka prema tome."
+    },
+    "q7": {
+      "question": "Da li 1-2-3 Fuel ima mobilnu aplikaciju?",
+      "answer": "Naša platforma je potpuno responzivna i savršeno radi na bilo kom mobilnom uređaju. Takođe razvijamo dedikovane iOS i Android aplikacije za još bolje iskustvo."
+    },
+    "q8": {
+      "question": "Kako radi kalkulator uštede?",
+      "answer": "Naš kalkulator upoređuje prosečnu cenu goriva u vašoj oblasti sa najjeftinijom dostupnom stanicom. Zatim izračunava vašu potencijalnu uštedu na osnovu toga koliko litara planirate da napunite."
+    },
+    "q9": {
+      "question": "Da li mi treba nalog za korišćenje 1-2-3 Fuel?",
+      "answer": "Nalog nije potreban za osnovne funkcije kao što su pregled cena i korišćenje mape. Međutim, kreiranje naloga vam omogućava da sačuvate omiljene stanice i primate obaveštenja o cenama."
+    },
+    "q10": {
+      "question": "Kako mogu da uštedim na gorivu?",
+      "answer": "Najbolji način da uštedite je da uporedite cene pre punjenja. Koristite našu mapu da pronađete najjeftiniju stanicu u blizini, razmislite o punjenju van špice, i održavajte vozilo za bolju efikasnost goriva."
+    },
+    "ctaTitle": "Imate još pitanja?",
+    "ctaSubtitle": "Naš tim je ovde da vam pomogne da uštedite na svakom punjenju.",
+    "contactUs": "Kontaktirajte podršku",
+    "findStation": "Pronađite stanicu"
   }
 }

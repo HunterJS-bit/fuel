@@ -3,6 +3,7 @@
     "map": "Mapa",
     "list": "Lista",
     "trends": "Trendovi",
+    "contact": "Kontakt",
     "getStarted": "Započni"
   },
   "hero": {
@@ -88,5 +89,37 @@
     "eurodiesel": "Euro Dizel",
     "bmb95": "BMB 95",
     "lpg": "Autogas"
+  },
+  "contact": {
+    "badge": "Razgovarajte sa pravom osobom",
+    "title": "Kontaktirajte nas",
+    "subtitle": "Recite nam o čemu se radi i mi ćemo vam se vratiti, obično u roku od 24 sata.",
+    "formTitle": "Pošaljite nam poruku",
+    "name": "Vaše ime",
+    "namePlaceholder": "Unesite svoje ime",
+    "email": "Email adresa",
+    "emailPlaceholder": "Unesite svoj email",
+    "subject": "Tema",
+    "selectSubject": "Izaberite temu",
+    "subjects": {
+      "support": "Opšta podrška",
+      "report": "Prijavite problem sa cenom",
+      "feedback": "Povratne informacije",
+      "partnership": "Partnerstvo",
+      "other": "Ostalo"
+    },
+    "message": "Poruka",
+    "messagePlaceholder": "Recite nam više o svom upitu...",
+    "submit": "Pošalji poruku",
+    "success": "Poruka uspešno poslata! Uskoro ćemo vam se javiti.",
+    "infoTitle": "Ili nas kontaktirajte direktno",
+    "emailTitle": "Email",
+    "emailDesc": "Odgovorimo u roku od 24 sata",
+    "phoneTitle": "Telefon",
+    "phoneDesc": "Pon-Pet, 9-17h",
+    "locationTitle": "Lokacija",
+    "locationDesc": "Naše sedište u Beogradu",
+    "webTitle": "Veb sajt",
+    "webDesc": "Posetite naš glavni sajt"
   }
 }

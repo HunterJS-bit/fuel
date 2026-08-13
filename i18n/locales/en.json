@@ -3,6 +3,7 @@
     "map": "Map",
     "list": "List",
     "trends": "Trends",
+    "contact": "Contact",
     "getStarted": "Get Started"
   },
   "hero": {
@@ -88,5 +89,37 @@
     "eurodiesel": "Euro Diesel",
     "bmb95": "BMB 95",
     "lpg": "LPG"
+  },
+  "contact": {
+    "badge": "Talk to a real person",
+    "title": "Get in touch",
+    "subtitle": "Tell us what it's about and we'll come back to you, usually within 24 hours.",
+    "formTitle": "Send us a message",
+    "name": "Your Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "subject": "Subject",
+    "selectSubject": "Select a subject",
+    "subjects": {
+      "support": "General Support",
+      "report": "Report Price Issue",
+      "feedback": "Feedback",
+      "partnership": "Partnership Inquiry",
+      "other": "Other"
+    },
+    "message": "Message",
+    "messagePlaceholder": "Tell us more about your inquiry...",
+    "submit": "Send Message",
+    "success": "Message sent successfully! We'll get back to you soon.",
+    "infoTitle": "Or reach us directly",
+    "emailTitle": "Email",
+    "emailDesc": "We'll respond within 24 hours",
+    "phoneTitle": "Phone",
+    "phoneDesc": "Mon-Fri, 9am-5pm",
+    "locationTitle": "Location",
+    "locationDesc": "Our headquarters in Belgrade",
+    "webTitle": "Website",
+    "webDesc": "Visit our main site"
   }
 }

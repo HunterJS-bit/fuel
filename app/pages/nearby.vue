@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-definePageMeta({ layout: 'default' })
+definePageMeta({ layout: 'landing' })
 import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
 
 const searchQuery = ref('')

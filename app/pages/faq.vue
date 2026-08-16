@@ -107,7 +107,6 @@ const toggleFaq = (id) => {
   overflow-x: hidden;
 }
 
-/* ── Hero ──
 .faq-hero {
   padding: 80px 24px 60px;
   background: var(--landing-hero-bg);

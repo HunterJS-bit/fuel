@@ -9,7 +9,9 @@
   },
   "hero": {
     "badge": "Serbia's #1 Fuel Price Tracker",
-    "title": "Find & Compare Fuel with 1-2-3 Fuel. Save on every fill-up.",
+    "titlePre": "Find & Compare Fuel with ",
+    "titleHighlight": "1-2-3 Fuel",
+    "titlePost": ". Save on every fill-up.",
     "subtitle": "Fast and reliable way to compare diesel, petrol, and LPG prices across 500+ stations in Serbia.",
     "getStarted": "Get Started",
     "browsePrices": "Browse Prices"

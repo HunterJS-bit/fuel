@@ -9,7 +9,9 @@
   },
   "hero": {
     "badge": "Broj 1 praćenje cena goriva u Srbiji",
-    "title": "Pronađite i uporedite gorivo sa 1-2-3 Fuel. Uštedite na svakom punjenju.",
+    "titlePre": "Pronađite i uporedite gorivo sa ",
+    "titleHighlight": "1-2-3 Fuel",
+    "titlePost": ". Uštedite na svakom punjenju.",
     "subtitle": "Brz i pouzdan način da uporedite cene dizela, benzina i autogasa na preko 500+ stanica u Srbiji.",
     "getStarted": "Započni",
     "browsePrices": "Pregledaj cene"

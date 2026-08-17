@@ -12,8 +12,8 @@
             {{ $t('hero.subtitle') }}
           </p>
           <div class="hero-cta">
-            <NuxtLink to="/map" class="btn-primary-lg">{{ $t('hero.getStarted') }}</NuxtLink>
-            <NuxtLink to="/list" class="btn-outline-lg">{{ $t('hero.browsePrices') }}</NuxtLink>
+            <!-- <NuxtLink to="/map" class="btn-primary-lg">{{ $t('hero.getStarted') }}</NuxtLink>
+            <NuxtLink to="/list" class="btn-outline-lg">{{ $t('hero.browsePrices') }}</NuxtLink> -->
           </div>
         </div>
 
@@ -91,11 +91,6 @@
                 stroke-linejoin="round"
               />
             </svg>
-
-            <div class="card-footer">
-              <span class="stations-count">{{ company.stations }} {{ $t('companies.stations') }}</span>
-              <NuxtLink :to="`/list?brand=${company.slug}`" class="card-link">{{ $t('companies.viewAll') }}</NuxtLink>
-            </div>
           </div>
         </div>
       </div>

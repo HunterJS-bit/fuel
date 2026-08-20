@@ -183,7 +183,7 @@ onMounted(async () => {
       const priceIcon = L.divIcon({
         className: 'nearby-price-marker',
         html: `<div class="p-marker ${isBest ? 'best' : ''}" id="marker-${station.id}">
-                 <span>${station.price}</span>
+                 <span>${station.brand}</span>
                </div>`,
         iconSize: [60, 30],
         iconAnchor: [30, 15]
@@ -191,7 +191,7 @@ onMounted(async () => {
 
       const m = L.marker([station.latitude, station.longitude], { icon: priceIcon })
         .addTo(leafletMap)
-        .bindPopup(`<b>${station.name}</b><br>${station.address}, ${station.city}<br>${station.price} RSD`)
+        .bindPopup(`<b>${station.name}</b><br>${station.address}, ${station.city}<br>`)
         .on('click', () => {
           expandedStationId.value = station.id
         })

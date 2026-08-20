@@ -8,7 +8,7 @@
 
       <nav class="nav-links">
         <NuxtLink to="/nearby">{{ $t('nav.map') }}</NuxtLink>
-        <NuxtLink to="/prices">{{ $t('nav.trends') }}</NuxtLink>
+        <!-- <NuxtLink to="/prices">{{ $t('nav.trends') }}</NuxtLink> -->
         <NuxtLink to="/faq">{{ $t('nav.faq') }}</NuxtLink>
         <NuxtLink to="/contact">{{ $t('nav.contact') }}</NuxtLink>
       </nav>

@@ -52,7 +52,7 @@
         <p>{{ $t('faq.ctaSubtitle') }}</p>
         <div class="cta-buttons">
           <NuxtLink to="/contact" class="btn-primary">{{ $t('faq.contactUs') }}</NuxtLink>
-          <NuxtLink to="/map" class="btn-outline">{{ $t('faq.findStation') }}</NuxtLink>
+          <NuxtLink to="/nearby" class="btn-outline">{{ $t('faq.findStation') }}</NuxtLink>
         </div>
       </div>
     </section>

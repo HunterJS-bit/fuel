@@ -140,7 +140,7 @@
       <div class="section-inner cta-inner">
         <h2>{{ $t('cta.title') }}</h2>
         <p>{{ $t('cta.subtitle') }}</p>
-        <NuxtLink to="/map" class="btn-primary-lg">{{ $t('cta.button') }}</NuxtLink>
+        <NuxtLink to="/nearby" class="btn-primary-lg">{{ $t('cta.button') }}</NuxtLink>
       </div>
     </section>
 

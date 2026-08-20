@@ -3,7 +3,7 @@
     <div class="nav-inner">
       <NuxtLink to="/" class="brand">
         <span class="brand-icon">⛽</span>
-        <span class="brand-name">1-2-3 <em>Fuel</em></span>
+        <span class="brand-name">III <em>Fuel</em></span>
       </NuxtLink>
 
       <nav class="nav-links">
@@ -109,7 +109,7 @@ onMounted(() => {
 }
 .btn-nav-primary {
   background: var(--primary);
-  color: #000;
+  color: #fff;
   padding: 10px 22px;
   border-radius: 8px;
   font-weight: 600;

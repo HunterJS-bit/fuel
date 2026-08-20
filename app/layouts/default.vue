@@ -8,9 +8,6 @@
       </div>
 
       <nav class="top-nav">
-        <NuxtLink to="/map" class="nav-item" active-class="active"
-          >Map</NuxtLink
-        >
         <NuxtLink to="/nearby" class="nav-item" active-class="active"
           >Nearby</NuxtLink
         >

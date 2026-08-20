@@ -6,7 +6,6 @@
         <p class="subtitle">Find the best prices and save on your next fill-up.</p>
       </div>
 
-      <!-- Price Trend Widget (Inspired by Petrol Pulse) -->
       <div class="trend-widget glass-panel">
         <div class="trend-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -29,7 +28,7 @@
       </div>
 
       <div class="stations-feed">
-        <h4 class="feed-title">Nearest Stations ({{filteredStations.length}})</h4>
+        <!-- <h4 class="feed-title">Nearest Stations ({{filteredStations.length}})</h4> -->
         <div 
           v-for="(station, idx) in filteredStations" 
           :key="station.id" 
@@ -41,22 +40,19 @@
           <div v-if="idx === 0" class="best-badge">🏆 Best Price</div>
           <div class="card-header" @click="toggleExpanded(station.id)">
             <div class="brand-col">
-              <div class="brand-logo" :class="station.type.toLowerCase()">
-                {{ station.type.charAt(0) }}
+              <div class="brand-logo" :class="station.type?.toLowerCase() || 'nis'">
+                {{ station.brand?.charAt(0) || 'N' }}
               </div>
             </div>
             <div class="details-col">
               <h3 class="s-name">{{ station.name }}</h3>
               <div class="s-meta">
-                <span class="dist">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                  {{ station.dist }} km
-                </span>
-                <span class="updated">Updated 2h ago</span>
+                <span class="brand">{{ station.brand }}</span>
+                <span class="updated">{{ station.city }}</span>
               </div>
             </div>
             <div class="price-col">
-              <div class="price-value">{{ station.price.toFixed(1) }}</div>
+              <div class="price-value">{{ (station.price || 0).toFixed(1) }}</div>
               <div class="price-currency">RSD</div>
               <div class="expand-icon" :class="{ 'expanded': expandedStationId === station.id }">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" class="chevron" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -72,9 +68,9 @@
                 <div class="acc-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
                 <div class="acc-text">{{ station.address }}</div>
               </div>
-              <div class="acc-row">
+              <div class="acc-row" v-if="station.hours">
                 <div class="acc-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
-                <div class="acc-text" :class="{ 'text-success': station.hours.includes('24/7') }">{{ station.hours }}</div>
+                <div class="acc-text" :class="{ 'text-success': station.hours.includes('00-24') }">{{ station.hours }}</div>
               </div>
               <div class="acc-row fuels-row">
                 <div class="acc-icon" style="margin-top: 4px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h18V2H3zm2 4V4h14v2H5zm-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8H3zm3 4h12v2H6v-2z"></path></svg></div>
@@ -102,48 +98,42 @@
   </div>
 </template>
 
-<script setup>
+<script setup >
 definePageMeta({ layout: 'landing' })
-import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
+
+
+import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
+import stationsData  from "../data/stations.json";
 
 const searchQuery = ref('')
-const stations = [
-  { id: 1, name: 'NIS Petrol', address: 'Bulevar Oslobođenja 12, Novi Sad 21000', dist: 1.2, lat: 44.787197, lng: 20.457273, price: 195.0, type: 'NIS', hours: 'Open 24/7', fuels: ['E10', 'BMB95', 'Diesel'] },
-  { id: 2, name: 'OMV', address: 'Jurija Gagarina 28, Novi Beograd 11070', dist: 1.8, lat: 44.802197, lng: 20.470273, price: 198.5, type: 'OMV', hours: 'Open 06:00 - 22:00', fuels: ['BMB95', 'MaxxMotion'] },
-  { id: 3, name: 'Eco', address: 'Radnička 44, Čukarica, Beograd 11030', dist: 0.9, lat: 44.795197, lng: 20.445273, price: 194.0, type: 'Eco', hours: 'Open 24/7', fuels: ['Diesel', 'E5'] },
-  { id: 4, name: 'MOL', address: 'Kneza Miloša 90, Savski Venac, Beograd 11000', dist: 2.5, lat: 44.790197, lng: 20.485273, price: 196.5, type: 'MOL', hours: 'Open 24/7', fuels: ['EVO Diesel', 'EVO 95'] }
-]
+const stations = ref([])
 
 const sortedStations = computed(() => {
-  return [...stations].sort((a,b) => a.price - b.price)
-})
-
-const filteredStations = computed(() => {
-  const query = searchQuery.value.toLowerCase()
-  if (!query) return sortedStations.value
-  return sortedStations.value.filter(s => 
-    s.name.toLowerCase().includes(query) || 
-    s.address.toLowerCase().includes(query) ||
-    s.type.toLowerCase().includes(query)
-  )
+  return [...stations.value].sort((a,b) => (a.price || 0) - (b.price || 0))
 })
 
 const hoveredStation = ref(null)
 const expandedStationId = ref(null)
 let leafletMap = null
 
+
 const toggleExpanded = (id) => {
-  if (expandedStationId.value === id) {
-    expandedStationId.value = null
-  } else {
-    expandedStationId.value = id
-  }
+  // if (expandedStationId.value === id) {
+  //   expandedStationId.value = null
+  // } else {
+  //   expandedStationId.value = id
+  // }
 }
 let markers = {}
 let mutationObserver = null
 
+
 onMounted(async () => {
   if (process.client) {
+    // Fetch real station data
+    const fetchedStations = stationsData
+    stations.value = fetchedStations.length > 0 ? fetchedStations : []
+
     const L = await import('leaflet')
     delete L.Icon.Default.prototype._getIconUrl
     L.Icon.Default.mergeOptions({
@@ -159,7 +149,7 @@ onMounted(async () => {
       maxBounds: serbiaBounds,
       maxBoundsViscosity: 1.0,
       minZoom: 6
-    }).setView([44.793, 20.465], 13)
+    }).setView([44.0, 21.0], 7)
 
     // React to theme changes using MutationObserver
     const isLightMode = document.documentElement.classList.contains('light-mode')
@@ -199,9 +189,12 @@ onMounted(async () => {
         iconAnchor: [30, 15]
       })
 
-      const m = L.marker([station.lat, station.lng], { icon: priceIcon })
+      const m = L.marker([station.latitude, station.longitude], { icon: priceIcon })
         .addTo(leafletMap)
-        .bindPopup(`<b>${station.name}</b><br>${station.price} RSD`)
+        .bindPopup(`<b>${station.name}</b><br>${station.address}, ${station.city}<br>${station.price} RSD`)
+        .on('click', () => {
+          expandedStationId.value = station.id
+        })
       
       markers[station.id] = { marker: m, elId: `marker-${station.id}` }
     })
@@ -214,20 +207,6 @@ onUnmounted(() => {
   }
 })
 
-watch(hoveredStation, (newId, oldId) => {
-  if (oldId && markers[oldId] && process.client) {
-    const el = document.getElementById(markers[oldId].elId)
-    if (el) el.classList.remove('hovered')
-  }
-  if (newId && markers[newId] && process.client) {
-    const el = document.getElementById(markers[newId].elId)
-    if (el) {
-      el.classList.add('hovered')
-      // Only pan if we really want it, it might be annoying on quick scroll
-      // leafletMap.flyTo(markers[newId].marker.getLatLng(), 14, { duration: 0.5 })
-    }
-  }
-})
 </script>
 
 <style scoped>

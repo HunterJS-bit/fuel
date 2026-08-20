@@ -3,6 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css'],
   modules: ['@nuxtjs/i18n'],
+  devtools: { enabled: false },
   i18n: {
     locales: [
       {

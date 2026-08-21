@@ -26,11 +26,22 @@
         </svg>
         <input type="text" v-model="searchQuery" class="location-search" placeholder="Search by postcode, town, or address..." />
       </div>
+      
+      <div class="fuel-tabs">
+        <button 
+          v-for="type in fuelOptions" 
+          :key="type"
+          :class="['fuel-tab', { active: fuelType === type }]"
+          @click="fuelType = type"
+        >
+          {{ type }}
+        </button>
+      </div>
 
       <div class="stations-feed">
         <!-- <h4 class="feed-title">Nearest Stations ({{filteredStations.length}})</h4> -->
         <div 
-          v-for="(station, idx) in filteredStations" 
+          v-for="(station, idx) in paginatedStations" 
           :key="station.id" 
           class="station-card glass-panel" 
           :class="{ 'best-price': idx === 0, 'is-expanded': expandedStationId === station.id }"
@@ -87,12 +98,20 @@
             </div>
           </div>
         </div>
+        
+        <button v-if="limit < filteredStations.length" @click="loadMore" class="load-more-btn">
+          Load More Stations
+        </button>
       </div>
     </div>
 
     <div class="map-section">
+      <div v-if="isMapLoading" class="map-loading-overlay">
+        <div class="spinner"></div>
+      </div>
       <ClientOnly>
         <div id="sticky-map"></div>
+        <MapLegend/>
       </ClientOnly>
     </div>
   </div>
@@ -108,13 +127,39 @@ import stationsData  from "../data/stations.json";
 const searchQuery = ref('')
 const stations = ref([])
 
-const sortedStations = computed(() => {
-  return [...stations.value].sort((a,b) => (a.price || 0) - (b.price || 0))
+const fuelType = ref('All')
+const fuelOptions = ['All', 'Euro Diesel', 'BMB 95', 'BMB 100', 'TNG/LPG']
+
+const filteredStations = computed(() => {
+  let filtered = [...stations.value]
+  if (fuelType.value !== 'All') {
+    filtered = filtered.filter(s => s.fuels && s.fuels.includes(fuelType.value))
+  }
+  if (searchQuery.value) {
+    const q = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(s => 
+      s.city?.toLowerCase().includes(q) || 
+      s.address?.toLowerCase().includes(q) || 
+      s.name?.toLowerCase().includes(q)
+    )
+  }
+  return filtered.sort((a,b) => (a.price || 0) - (b.price || 0))
 })
 
 const hoveredStation = ref(null)
 const expandedStationId = ref(null)
 let leafletMap = null
+
+const isMapLoading = ref(true)
+
+const limit = ref(20)
+const loadMore = () => { limit.value += 20 }
+
+watch([searchQuery, fuelType], () => { limit.value = 20 })
+
+const paginatedStations = computed(() => {
+  return filteredStations.value.slice(0, limit.value)
+})
 
 
 const toggleExpanded = (id) => {
@@ -134,7 +179,11 @@ onMounted(async () => {
     const fetchedStations = stationsData
     stations.value = fetchedStations.length > 0 ? fetchedStations : []
 
-    const L = await import('leaflet')
+    const L_mod = await import('leaflet')
+    const L = L_mod.default || L_mod
+    window.L = L
+    await import('leaflet.markercluster')
+    
     delete L.Icon.Default.prototype._getIconUrl
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -153,6 +202,31 @@ onMounted(async () => {
 
     // React to theme changes using MutationObserver
     const isLightMode = document.documentElement.classList.contains('light-mode')
+
+     // Create Native Control
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'info legend');
+      const grades = ['High', 'Medium', 'Low'];
+      const colors = ['#FF0000', '#FFA500', '#008000'];
+
+      div.innerHTML = '<h4>Risk Level</h4>';
+
+      // Loop through intervals to generate labels with colored squares
+      for (let i = 0; i < grades.length; i++) {
+        div.innerHTML += `
+          <div class="legend-row">
+            <i style="background: ${colors[i]}"></i>
+            <span>${grades[i]}</span>
+          </div>
+        `;
+      }
+      return div;
+    };
+
+    legend.addTo(leafletMap);
+    // Legend part done
     
     let currentTileLayer = L.tileLayer(
       isLightMode ? 
@@ -178,26 +252,45 @@ onMounted(async () => {
 
     mutationObserver.observe(document.documentElement, { attributes: true })
 
-    sortedStations.value.forEach(station => {
-      const isBest = station.id === sortedStations.value[0].id
-      const priceIcon = L.divIcon({
-        className: 'nearby-price-marker',
-        html: `<div class="p-marker ${isBest ? 'best' : ''}" id="marker-${station.id}">
-                 <span>${station.brand}</span>
-               </div>`,
-        iconSize: [60, 30],
-        iconAnchor: [30, 15]
-      })
-
-      const m = L.marker([station.latitude, station.longitude], { icon: priceIcon })
-        .addTo(leafletMap)
-        .bindPopup(`<b>${station.name}</b><br>${station.address}, ${station.city}<br>`)
-        .on('click', () => {
-          expandedStationId.value = station.id
-        })
-      
-      markers[station.id] = { marker: m, elId: `marker-${station.id}` }
+    const markerClusterGroup = L.markerClusterGroup({
+      chunkedLoading: true,
+      maxClusterRadius: 50,
+      showCoverageOnHover: false,
+      spiderfyOnMaxZoom: true
     })
+    leafletMap.addLayer(markerClusterGroup)
+
+    watch(filteredStations, (newStations) => {
+      markerClusterGroup.clearLayers()
+      const newMarkers = []
+      
+      newStations.forEach(station => {
+        const isBest = station.id === newStations[0]?.id
+        const priceIcon = L.divIcon({
+          className: 'nearby-price-marker',
+          html: `<div class="p-marker ${isBest ? 'best' : ''}" id="marker-${station.id}">
+                   <span>${station.brand}</span>
+                 </div>`,
+          iconSize: [60, 30],
+          iconAnchor: [30, 15]
+        })
+
+        const m = L.marker([station.latitude, station.longitude], { icon: priceIcon })
+          .bindPopup(`<b>${station.name}</b><br>${station.address}, ${station.city}<br>`)
+          .on('click', () => {
+            expandedStationId.value = station.id
+          })
+        
+        markers[station.id] = { marker: m, elId: `marker-${station.id}` }
+        newMarkers.push(m)
+      })
+      
+      markerClusterGroup.addLayers(newMarkers)
+      
+      setTimeout(() => {
+        isMapLoading.value = false
+      }, 300)
+    }, { immediate: true })
   }
 })
 
@@ -229,6 +322,7 @@ onUnmounted(() => {
   gap: 24px;
   z-index: 2;
   box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+  background: var(--bg-color);
 }
 
 .sidebar-header {
@@ -309,6 +403,42 @@ onUnmounted(() => {
   box-shadow: 0 4px 15px var(--primary-glow);
 }
 
+.fuel-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.fuel-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+.fuel-tabs::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.fuel-tab {
+  padding: 8px 16px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.fuel-tab:hover {
+  background: rgba(56, 97, 251, 0.05);
+  border-color: var(--primary-border);
+}
+.fuel-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px var(--primary-glow);
+}
+
 .feed-title {
   font-size: 1.1rem;
   color: var(--text-muted);
@@ -322,6 +452,22 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 16px;
   padding-bottom: 40px;
+}
+
+.load-more-btn {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.load-more-btn:hover {
+  background: rgba(56, 97, 251, 0.05);
+  border-color: var(--primary-border);
 }
 
 .station-card {
@@ -502,6 +648,27 @@ html.dark-mode .fuel-badge {
 #sticky-map {
   width: 100%;
   height: 100%;
+}
+
+.map-loading-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-color);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 @media (max-width: 900px) {

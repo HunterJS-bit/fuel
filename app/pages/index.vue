@@ -12,8 +12,6 @@
             {{ $t('hero.subtitle') }}
           </p>
           <div class="hero-cta">
-            <!-- <NuxtLink to="/map" class="btn-primary-lg">{{ $t('hero.getStarted') }}</NuxtLink>
-            <NuxtLink to="/list" class="btn-outline-lg">{{ $t('hero.browsePrices') }}</NuxtLink> -->
           </div>
         </div>
 
@@ -96,6 +94,23 @@
       </div>
     </section>
 
+    <!-- Latest News Section -->
+    <section class="news-section">
+      <div class="section-inner">
+        <div class="news-header">
+          <div>
+            <span class="section-badge">{{ $t('news.badge') }}</span>
+            <h2>{{ $t('news.title') }}</h2>
+            <p class="section-sub">{{ $t('news.subtitle') }}</p>
+          </div>
+          <NuxtLink to="/blog" class="view-all-link">{{ $t('news.viewAll') }} →</NuxtLink>
+        </div>
+        <div class="news-grid">
+          <BlogCard v-for="post in latestPosts" :key="post.slug" :post="post" />
+        </div>
+      </div>
+    </section>
+
     <!-- Trusted Brands Row -->
     <section class="trusted-section">
       <div class="section-inner">
@@ -151,6 +166,9 @@
 definePageMeta({ layout: 'landing' })
 
 import { ref, computed } from 'vue'
+import { getLatestPosts } from '~/data/blogPosts'
+
+const latestPosts = getLatestPosts(3)
 
 const fuelType = ref('eurodiesel')
 const liters = ref(50)
@@ -544,6 +562,38 @@ const savings = computed(() => {
 }
 .card-link:hover { text-decoration: underline; }
 
+/* ── News ── */
+.news-section {
+  padding: 80px 24px;
+  background: var(--landing-section-alt);
+}
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.news-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin-bottom: 8px;
+}
+.view-all-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.view-all-link:hover { opacity: 0.8; }
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
 /* ── Trusted ── */
 .trusted-section {
   padding: 50px 24px;
@@ -672,6 +722,7 @@ const savings = computed(() => {
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .steps-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr 1fr; }
+  .news-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .features-grid { grid-template-columns: 1fr; }

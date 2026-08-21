@@ -7,6 +7,9 @@
       </div>
       <div class="footer-links">
         <h4>{{ $t('footer.product') }}</h4>
+        <NuxtLink to="/blog">{{ $t('footer.blog') }}</NuxtLink>
+        <NuxtLink to="/nearby">{{ $t('footer.liveMap') }}</NuxtLink>
+        <NuxtLink to="/charging">{{ $t('footer.evCharging') }}</NuxtLink>
       </div>
       <div class="footer-links">
         <h4>{{ $t('footer.companies') }}</h4>

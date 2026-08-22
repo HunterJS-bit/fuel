@@ -32,9 +32,17 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap' },
-        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' }
+        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' },
+        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' },
+        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' }
       ]
     }
   },
   compatibilityDate: '2024-11-01',
+  vite: {
+    optimizeDeps: {
+      // exclude: ['vue-router'],
+      include: ['leaflet', 'leaflet.markercluster']
+    }
+  }
 })

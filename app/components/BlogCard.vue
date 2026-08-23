@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/blog/${post.slug}`" class="blog-card">
-    <div class="card-image" :style="{ background: post.imageGradient }">
+    <div class="card-image" :style="{ backgroundImage: `url(https://picsum.photos/seed/${post.slug}/600/400)`, backgroundSize: 'cover', backgroundPosition: 'center' }">
       <span class="card-category">{{ $t(post.categoryKey) }}</span>
     </div>
     <div class="card-body">
@@ -98,6 +98,7 @@ const formattedDate = computed(() => {
   margin-bottom: 10px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -108,6 +109,7 @@ const formattedDate = computed(() => {
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 16px;

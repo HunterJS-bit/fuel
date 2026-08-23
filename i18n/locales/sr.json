@@ -3,9 +3,12 @@
     "map": "Mapa",
     "list": "Lista",
     "trends": "Trendovi",
+    "blog": "Blog",
+    "charging": "EV Punjenje",
     "faq": "ČPP",
     "contact": "Kontakt",
-    "getStarted": "Započni"
+    "getStarted": "Započni",
+    "providers": "Provajderi"
   },
   "hero": {
     "badge": "Broj 1 platforma za praćenje cena goriva u Srbiji",
@@ -21,7 +24,16 @@
     "fuelType": "Tip goriva",
     "liters": "Litara za punjenje",
     "saveVsAverage": "Ušteda u odnosu na prosek",
-    "findCheapest": "Pronađi najjeftiniju stanicu"
+    "findCheapest": "Pronađi najjeftiniju stanicu",
+    "tabSavings": "Ušteda",
+    "tabTrip": "Cena puta",
+    "tripTitle": "Planirajte svoju rutu",
+    "route": "Ruta",
+    "startCity": "Polazak",
+    "endCity": "Odredište",
+    "consumption": "Potrošnja",
+    "estCost": "Procenjena cena",
+    "findOnRoute": "Stanice na ruti"
   },
   "companies": {
     "badge": "Istaknute brendove goriva",
@@ -80,7 +92,9 @@
     "product": "Proizvod",
     "companies": "Kompanije",
     "support": "Podrška",
+    "blog": "Blog",
     "liveMap": "Živa mapa",
+    "evCharging": "EV punjenje",
     "stationList": "Lista stanica",
     "priceTrends": "Trendovi cena",
     "faq": "FAQ",
@@ -185,5 +199,133 @@
     "message": "Stranica koju tražite ne postoji ili je premeštena. Vratimo vas na pravi put.",
     "goHome": "Idite na početnu",
     "viewMap": "Pogledajte mapu"
+  },
+  "news": {
+    "badge": "Najnovije vesti",
+    "title": "Vesti i ažuriranja cena goriva",
+    "subtitle": "Budite informisani o tržišnim trendovima, promenama cena kompanija i savetima za uštedu.",
+    "viewAll": "Pogledajte sve članke"
+  },
+  "blog": {
+    "badge": "Vesti o cenama goriva",
+    "title": "Blog i vesti o gorivu",
+    "subtitle": "Ažuriranja tržišta, promene cena kompanija i saveti za uštedu na pumpi.",
+    "minRead": "min čitanja",
+    "readMore": "Pročitaj više",
+    "backToBlog": "Nazad na blog",
+    "noPosts": "Nema članaka u ovoj kategoriji.",
+    "categories": {
+      "all": "Sve",
+      "market": "Tržište",
+      "companies": "Kompanije",
+      "tips": "Saveti",
+      "lpg": "Autogas",
+      "policy": "Politika"
+    },
+    "posts": {
+      "p1": {
+        "title": "Cene dizela rastu širom Srbije u avgustu 2026.",
+        "excerpt": "Cene evro dizela porasle su u proseku za 1,2% ove nedelje, sa NIS-om i OMV-om na čelu u Beogradu i Novom Sadu.",
+        "content": "Cene evro dizela širom Srbije porasle su u proseku za 1,2% u trećoj nedelji avgusta 2026, prema podacima prikupljenim sa preko 500 stanica. NIS Petrol i OMV su povećali cene u Beogradu i Novom Sadu, dok Eco zadržava najniži prosek u prestonici od 194 RSD/L. Analitičari pripisuju rast višim cenama nafte na globalnim tržištima i sezonskoj potražnji pred praznični vikend. Vozači u centralnoj Srbiji zabeležili su najmanje povećanje, dok su južne regije imale nešto veće skokove. Preporučujemo da uporedite cene na našoj mapi pre sledećeg punjenja."
+      },
+      "p2": {
+        "title": "NIS Petrol najavljuje korekciju cena sredinom meseca",
+        "excerpt": "Najveći prodavac goriva u Srbiji ažurirao je cene dizela i benzina na 312 stanica širom zemlje, odmah na snazi.",
+        "content": "NIS Petrol, najveći prodavac goriva u Srbiji, sproveo je korekciju cena sredinom meseca koja obuhvata svih 312 stanica. Evro dizel sada u proseku iznosi 195 RSD/L, što je 0,5 RSD više nego prošle nedelje. BMB 95 benzin beleži manje povećanje od 0,3 RSD/L. Kompanija navodi međunarodne referentne cene i fluktuacije kursa kao glavne faktore. Vlasnici loyalty kartica i dalje mogu ostvariti popuste na odabranim lokacijama."
+      },
+      "p3": {
+        "title": "Cene autogasa stabilne tokom leta 2026.",
+        "excerpt": "Cene LPG-a ostaju oko 85 RSD/L dok potražnja dostiže vrhunac tokom sezone odmora širom Srbije.",
+        "content": "Cene autogasa (LPG) ostale su izuzetno stabilne tokom leta 2026, krećući se oko 85 RSD/L na većini stanica. Uprkos povećanoj potražnji od strane putnika na odmoru, snabdevanje je pratilo potražnju, a konkurencija među prodavcima sprečila značajnije poskupljenje. Eco i Petrol nude najkonkurentnije LPG cene u Beogradu, dok ruralne stanice obično naplaćuju 2–3 RSD/L više. Ako vozite vozilo na autogas, sada je dobar trenutak za punjenje pre eventualnih jesenjih korekcija."
+      },
+      "p4": {
+        "title": "Najbolje vreme za punjenje u Beogradu ovog meseca",
+        "excerpt": "Naši podaci pokazuju da utorkom i sredom ujutru važe najniže prosečne cene goriva u beogradskom regionu.",
+        "content": "Analiza podataka iz poslednjih šest meseci pokazuje da utorkom i sredom ujutru između 6 i 9 sati dosledno važe najniže prosečne cene goriva u Beogradu. Cene obično rastu petkom i subotom zbog potražnje za vikend putovanja. Stanice blizu izlaza sa autoputa naplaćuju 3–5 RSD/L više od onih u stambenim kvartovima. Korišćenjem našeg kalkulatora uštede, vozač koji napuni 50 litara u utorak umesto u subotu u proseku uštedi 150 RSD mesečno."
+      },
+      "p5": {
+        "title": "OMV vs MOL: koji brend je jeftiniji u 2026?",
+        "excerpt": "Uporedili smo cene na 156 OMV i MOL stanica — evo šta smo otkrili za vozače dizela i benzina.",
+        "content": "Naše poređenje 156 OMV i MOL stanica širom Srbije pokazuje da MOL u proseku naplaćuje 0,8 RSD/L jeftiniji evro dizel, dok OMV nudi nešto niže cene BMB 95 benzina u urbanim zonama. OMV stanice su brojnije u Beogradu (89 naspram 67 MOL lokacija), što vozačima daje više izbora. Oba brenda ažuriraju cene po sličnom rasporedu, obično sredinom nedelje. Za maksimalnu uštedu, proverite našu živu mapu umesto oslanjanja isključivo na lojalnost brendu."
+      },
+      "p6": {
+        "title": "Šta promene akciza 2026. znače za cene goriva",
+        "excerpt": "Nove akcizne korekcije mogle bi dodati 2–4 RSD/L na cene dizela i benzina od septembra 2026.",
+        "content": "Planirane korekcije akciza srpske vlade za septembar 2026. očekuju se da će dodati 2–4 RSD/L na cene dizela i benzina na pumpi. Ministarstvo finansija potvrdilo je da se promene odnose na sve kategorije goriva uključujući LPG. Prodavci su najavili da će celokupno povećanje preneti na potrošače u prvoj nedelji septembra. Vozači koji planiraju duža putovanja treba da razmotre punjenje pre kraja avgusta kako bi izbegli poskupljenje."
+      },
+      "p7": {
+        "title": "Eco stanice dosledno nude najniže cene dizela",
+        "excerpt": "Treći mesec zaredom Eco vodi naš rang cena sa prosečnom cenom dizela od 194 RSD/L.",
+        "content": "Eco je treći mesec zaredom zadržao najnižu prosečnu cenu evro dizela u Srbiji, od 194 RSD/L. Sa 45 stanica pretežno u Beogradu i centralnoj Srbiji, Eco agresivno konkurira po ceni, a ne po veličini mreže. Njihove stanice su često malo udaljene od glavnih puteva, što ih čini idealnim za vozače koji planiraju unapred. Imajte na umu da Eco stanice mogu imati kraće radno vreme u odnosu na veće brendove."
+      },
+      "p8": {
+        "title": "10 saveta za vožnju koji smanjuju račun za gorivo",
+        "excerpt": "Jednostavne navike poput stabilne brzine i pritiska u gumama mogu smanjiti potrošnju do 15%.",
+        "content": "Pored pronalaženja najjeftinije stanice, način vožnje ima ogroman uticaj na troškove goriva. Održavanje stabilne brzine između 80–100 km/h na autoputu, pravilno naduvane gume, uklanjanje viška težine i izbegavanje agresivnog ubrzavanja mogu smanjiti potrošnju do 15%. Umerena upotreba klime i objedinjavanje obaveza u jednu vožnju takođe pomaže. U kombinaciji sa našim alatima za poređenje cena, možete uštedeti preko 5.000 RSD godišnje na gorivu."
+      }
+    }
+  },
+  "providers": {
+    "badge": "Provajderi Goriva",
+    "title": "Provajderi Goriva u Srbiji",
+    "subtitle": "Uporedite trenutne cene i istorijske trendove svih većih kompanija koje posluju u Srbiji.",
+    "cheapestFor": "Najjeftiniji za",
+    "stations": "stanica",
+    "viewOnMap": "Prikaži na mapi",
+    "historyTitle": "Istorija Cena (2026)",
+    "table": {
+      "company": "Kompanija",
+      "eurodiesel": "Euro Dizel",
+      "bmb95": "BMB 95",
+      "lpg": "Autogas",
+      "bmb100": "BMB 100",
+      "ecoPremium": "Evro Premium",
+      "stations": "Stanice",
+      "action": "Akcija"
+    }
+  },
+  "charging": {
+    "badge": "Mreža EV punjenja",
+    "title": "Pronađite EV stanice za punjenje",
+    "subtitle": "Locirajte brze punjače, Tesla Superchargere i AC tačke širom Srbije.",
+    "searchPlaceholder": "Pretražite grad, mrežu ili adresu...",
+    "legend": "Tipovi punjača",
+    "getDirections": "Navigacija",
+    "noResults": "Nema stanica koje odgovaraju filterima.",
+    "stats": {
+      "stations": "Stanice",
+      "available": "Slobodno",
+      "maxPower": "Max snaga"
+    },
+    "filters": {
+      "all": "Sve"
+    },
+    "types": {
+      "type2": "AC Type 2",
+      "ccs": "DC CCS",
+      "chademo": "CHAdeMO",
+      "tesla": "Tesla SC",
+      "ultra": "Ultra HPC"
+    },
+    "status": {
+      "available": "slobodno",
+      "busy": "zauzeto",
+      "offline": "offline"
+    },
+    "amenities": {
+      "wifi": "Wi-Fi",
+      "cafe": "Kafić",
+      "restroom": "Toalet",
+      "shopping": "Kupovina",
+      "parking": "Parking",
+      "lounge": "Salon",
+      "hotel": "Hotel"
+    }
+  },
+  "ticker": {
+    "item1": "Cene dizela su pale za 1,2% ove nedelje, najjeftiniji je Eco za 194 RSD/L.",
+    "item2": "OMV nudi nove popuste na premium dizel za članove lojalnosti.",
+    "item3": "Mreža EV punjača se širi sa 50 novih ultra-brzih punjača u 2026.",
+    "item4": "Autogas ostaje stabilan na 85 RSD/L pred letnju sezonu."
   }
 }

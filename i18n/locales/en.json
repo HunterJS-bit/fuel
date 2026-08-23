@@ -3,9 +3,12 @@
     "map": "Map",
     "list": "List",
     "trends": "Trends",
+    "blog": "Blog",
+    "charging": "EV Charging",
     "faq": "FAQ",
     "contact": "Contact",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "providers": "Providers"
   },
   "hero": {
     "badge": "Serbia's #1 Fuel Price Tracker",
@@ -21,7 +24,16 @@
     "fuelType": "Fuel Type",
     "liters": "Liters to fill",
     "saveVsAverage": "You save vs. average",
-    "findCheapest": "Find Cheapest Station"
+    "findCheapest": "Find Cheapest Station",
+    "tabSavings": "Savings",
+    "tabTrip": "Trip Cost",
+    "tripTitle": "Plan Your Route",
+    "route": "Route",
+    "startCity": "Start City",
+    "endCity": "Destination",
+    "consumption": "Consumption",
+    "estCost": "Est. Cost",
+    "findOnRoute": "Stations on Route"
   },
   "companies": {
     "badge": "Featured fuel brands",
@@ -80,7 +92,9 @@
     "product": "Product",
     "companies": "Companies",
     "support": "Support",
+    "blog": "Blog",
     "liveMap": "Live Map",
+    "evCharging": "EV Charging",
     "stationList": "Station List",
     "priceTrends": "Price Trends",
     "faq": "FAQ",
@@ -185,5 +199,133 @@
     "message": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
     "goHome": "Go Home",
     "viewMap": "View Map"
+  },
+  "news": {
+    "badge": "Latest news",
+    "title": "Fuel Price News & Updates",
+    "subtitle": "Stay informed about market trends, company price changes, and money-saving tips.",
+    "viewAll": "View all articles"
+  },
+  "blog": {
+    "badge": "Fuel price news",
+    "title": "Blog & Fuel Price News",
+    "subtitle": "Market updates, company price changes, and tips to help you save at the pump.",
+    "minRead": "min read",
+    "readMore": "Read more",
+    "backToBlog": "Back to blog",
+    "noPosts": "No articles found in this category.",
+    "categories": {
+      "all": "All",
+      "market": "Market",
+      "companies": "Companies",
+      "tips": "Tips",
+      "lpg": "LPG",
+      "policy": "Policy"
+    },
+    "posts": {
+      "p1": {
+        "title": "Diesel prices rise across Serbia in August 2026",
+        "excerpt": "Euro diesel prices climbed an average of 1.2% this week, with NIS and OMV leading the increase in Belgrade and Novi Sad.",
+        "content": "Euro diesel prices across Serbia rose an average of 1.2% in the third week of August 2026, according to data collected from over 500 stations. NIS Petrol and OMV adjusted prices upward in Belgrade and Novi Sad, while Eco maintained the lowest average in the capital at 194 RSD/L. Analysts attribute the rise to higher crude oil prices on global markets and seasonal demand ahead of the holiday weekend. Drivers in central Serbia saw the smallest increases, while southern regions reported slightly larger jumps. We recommend comparing prices on our map before your next fill-up."
+      },
+      "p2": {
+        "title": "NIS Petrol announces mid-month price adjustment",
+        "excerpt": "Serbia's largest fuel retailer updated diesel and petrol prices at 312 stations nationwide, effective immediately.",
+        "content": "NIS Petrol, Serbia's largest fuel retailer, rolled out a mid-month price adjustment affecting all 312 of its stations. Euro diesel now averages 195 RSD/L nationally, up 0.5 RSD from last week. BMB 95 petrol saw a smaller increase of 0.3 RSD/L. The company cited international benchmark prices and exchange rate fluctuations as primary drivers. Loyalty card holders may still access discounted rates at select locations."
+      },
+      "p3": {
+        "title": "LPG prices remain stable through summer 2026",
+        "excerpt": "Autogas prices hold steady at around 85 RSD/L as demand peaks during the vacation season across Serbia.",
+        "content": "LPG (autogas) prices have remained remarkably stable throughout the summer of 2026, hovering around 85 RSD/L at most stations. Despite increased demand from vacation travelers, supply has kept pace and competition among retailers has prevented significant price hikes. Eco and Petrol offer the most competitive LPG rates in Belgrade, while rural stations tend to charge 2–3 RSD/L more. If you drive an LPG-converted vehicle, now is a good time to fill up before potential autumn adjustments."
+      },
+      "p4": {
+        "title": "Best time to fill up in Belgrade this month",
+        "excerpt": "Our data shows Tuesday and Wednesday mornings offer the lowest average fuel prices in the Belgrade area.",
+        "content": "Analysis of six months of price data reveals that Tuesday and Wednesday mornings between 6–9 AM consistently show the lowest average fuel prices in Belgrade. Prices tend to rise on Fridays and Saturdays as weekend travel demand increases. Stations near highway exits charge 3–5 RSD/L more than those in residential neighborhoods. Using our savings calculator, a driver filling 50 liters on a Tuesday instead of a Saturday saves an average of 150 RSD per month."
+      },
+      "p5": {
+        "title": "OMV vs MOL: which brand is cheaper in 2026?",
+        "excerpt": "We compared prices at 156 OMV and MOL stations — here's what we found for diesel and petrol drivers.",
+        "content": "Our comparison of 156 OMV and MOL stations across Serbia shows MOL averaging 0.8 RSD/L cheaper for Euro diesel, while OMV offers slightly lower BMB 95 petrol prices in urban areas. OMV stations are more numerous in Belgrade (89 vs 67 MOL locations), giving drivers more choice. Both brands update prices on similar schedules, typically mid-week. For maximum savings, check our live map rather than relying on brand loyalty alone."
+      },
+      "p6": {
+        "title": "What the 2026 excise tax changes mean for fuel prices",
+        "excerpt": "New excise duty adjustments could add 2–4 RSD/L to diesel and petrol prices starting September 2026.",
+        "content": "The Serbian government's planned excise tax adjustments for September 2026 are expected to add 2–4 RSD/L to both diesel and petrol prices at the pump. The Ministry of Finance confirmed the changes apply to all fuel categories including LPG. Retailers have indicated they will pass the full increase to consumers within the first week of September. Drivers planning long trips should consider filling up before the end of August to avoid the price bump."
+      },
+      "p7": {
+        "title": "Eco stations consistently offer lowest diesel prices",
+        "excerpt": "For the third month running, Eco leads our price rankings with an average diesel price of 194 RSD/L.",
+        "content": "Eco has maintained the lowest average Euro diesel price in Serbia for the third consecutive month, at 194 RSD/L. With 45 stations primarily in Belgrade and central Serbia, Eco competes aggressively on price rather than network size. Their stations are often located slightly off main roads, making them ideal for drivers who plan ahead. Note that Eco stations may have shorter opening hours compared to major brands."
+      },
+      "p8": {
+        "title": "10 driving tips to cut your fuel bill this year",
+        "excerpt": "Simple habits like steady speeds and proper tire pressure can reduce fuel consumption by up to 15%.",
+        "content": "Beyond finding the cheapest station, how you drive has a huge impact on fuel costs. Maintaining steady speeds between 80–100 km/h on highways, keeping tires properly inflated, removing excess weight, and avoiding aggressive acceleration can reduce fuel consumption by up to 15%. Using air conditioning sparingly and combining errands into one trip also helps. Pair these habits with our price comparison tools and you could save over 5,000 RSD per year on fuel."
+      }
+    }
+  },
+  "providers": {
+    "badge": "Gas Providers",
+    "title": "Fuel Providers in Serbia",
+    "subtitle": "Compare current prices and historical trends across all major fuel companies operating in Serbia.",
+    "cheapestFor": "Cheapest for",
+    "stations": "Stations",
+    "viewOnMap": "View on Map",
+    "historyTitle": "Price History (2026)",
+    "table": {
+      "company": "Company",
+      "eurodiesel": "Euro Diesel",
+      "bmb95": "BMB 95",
+      "lpg": "LPG",
+      "bmb100": "BMB 100",
+      "ecoPremium": "Euro Premium",
+      "stations": "Stations",
+      "action": "Action"
+    }
+  },
+  "charging": {
+    "badge": "EV Charging Network",
+    "title": "Find EV Charging Stations",
+    "subtitle": "Locate fast chargers, Tesla Superchargers, and AC points across Serbia.",
+    "searchPlaceholder": "Search city, network, or address...",
+    "legend": "Charger types",
+    "getDirections": "Get Directions",
+    "noResults": "No charging stations match your filters.",
+    "stats": {
+      "stations": "Stations",
+      "available": "Available",
+      "maxPower": "Max power"
+    },
+    "filters": {
+      "all": "All"
+    },
+    "types": {
+      "type2": "AC Type 2",
+      "ccs": "DC CCS",
+      "chademo": "CHAdeMO",
+      "tesla": "Tesla SC",
+      "ultra": "Ultra HPC"
+    },
+    "status": {
+      "available": "available",
+      "busy": "busy",
+      "offline": "offline"
+    },
+    "amenities": {
+      "wifi": "Wi-Fi",
+      "cafe": "Café",
+      "restroom": "Restroom",
+      "shopping": "Shopping",
+      "parking": "Parking",
+      "lounge": "Lounge",
+      "hotel": "Hotel"
+    }
+  },
+  "ticker": {
+    "item1": "Diesel prices dropped by 1.2% this week, cheapest is Eco at 194 RSD/L.",
+    "item2": "OMV rolling out new premium diesel discounts for loyalty members.",
+    "item3": "EV charging network expanding with 50 new ultra-fast chargers in 2026.",
+    "item4": "LPG remains stable at 85 RSD/L heading into the summer season."
   }
 }

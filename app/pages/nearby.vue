@@ -306,7 +306,7 @@ onUnmounted(() => {
 .nearby-container {
   display: flex;
   height: 100vh;
-  padding-top: 75px; 
+
   background: var(--bg-color);
   overflow: hidden;
 }

@@ -1,5 +1,19 @@
 <template>
   <div class="landing">
+        <!-- News Ticker Section -->
+    <div class="news-ticker">
+      <div class="ticker-track">
+        <span class="ticker-item">📉 {{ $t('ticker.item1') }}</span>
+        <span class="ticker-item">🟢 {{ $t('ticker.item2') }}</span>
+        <span class="ticker-item">⚡ {{ $t('ticker.item3') }}</span>
+        <span class="ticker-item">📊 {{ $t('ticker.item4') }}</span>
+        <!-- Duplicate for seamless scroll -->
+        <span class="ticker-item" aria-hidden="true">📉 {{ $t('ticker.item1') }}</span>
+        <span class="ticker-item" aria-hidden="true">🟢 {{ $t('ticker.item2') }}</span>
+        <span class="ticker-item" aria-hidden="true">⚡ {{ $t('ticker.item3') }}</span>
+        <span class="ticker-item" aria-hidden="true">📊 {{ $t('ticker.item4') }}</span>
+      </div>
+    </div>
     <!-- Hero Section (Tradix-inspired) -->
     <section class="hero">
       <div class="hero-inner">
@@ -16,28 +30,69 @@
         </div>
 
         <div class="hero-widget">
+          <div class="widget-tabs">
+            <button :class="{ active: activeWidget === 'savings' }" @click="activeWidget = 'savings'">{{ $t('widget.tabSavings') }}</button>
+            <button :class="{ active: activeWidget === 'trip' }" @click="activeWidget = 'trip'">{{ $t('widget.tabTrip') }}</button>
+          </div>
           <div class="widget-card">
-            <h3 class="widget-title">{{ $t('widget.title') }}</h3>
-            <div class="widget-field">
-              <label>{{ $t('widget.fuelType') }}</label>
-              <select v-model="fuelType">
-                <option value="eurodiesel">{{ $t('fuelTypes.eurodiesel') }}</option>
-                <option value="bmb95">{{ $t('fuelTypes.bmb95') }}</option>
-                <option value="lpg">{{ $t('fuelTypes.lpg') }}</option>
-              </select>
-            </div>
-            <div class="widget-field">
-              <label>{{ $t('widget.liters') }}</label>
-              <input v-model.number="liters" type="number" min="10" max="100" />
-            </div>
-            <div class="widget-result">
-              <span class="result-label">{{ $t('widget.saveVsAverage') }}</span>
-              <span class="result-value">{{ savings.toFixed(0) }} <small>RSD</small></span>
-            </div>
-            <NuxtLink to="/list" class="btn-widget">
-              {{ $t('widget.findCheapest') }}
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
-            </NuxtLink>
+            <template v-if="activeWidget === 'savings'">
+              <h3 class="widget-title">{{ $t('widget.title') }}</h3>
+              <div class="widget-field">
+                <label>{{ $t('widget.fuelType') }}</label>
+                <select v-model="fuelType">
+                  <option value="eurodiesel">{{ $t('fuelTypes.eurodiesel') }}</option>
+                  <option value="bmb95">{{ $t('fuelTypes.bmb95') }}</option>
+                  <option value="lpg">{{ $t('fuelTypes.lpg') }}</option>
+                </select>
+              </div>
+              <div class="widget-field">
+                <label>{{ $t('widget.liters') }}</label>
+                <input v-model.number="liters" type="number" min="10" max="100" />
+              </div>
+              <div class="widget-result">
+                <span class="result-label">{{ $t('widget.saveVsAverage') }}</span>
+                <span class="result-value">{{ savings.toFixed(0) }} <small>RSD</small></span>
+              </div>
+              <NuxtLink to="/nearby" class="btn-widget">
+                {{ $t('widget.findCheapest') }}
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
+              </NuxtLink>
+            </template>
+            <template v-else>
+              <h3 class="widget-title">{{ $t('widget.tripTitle') }}</h3>
+              <div class="widget-field">
+                <label>{{ $t('widget.route') }}</label>
+                <div class="route-inputs">
+                  <input v-model="tripStart" type="text" :placeholder="$t('widget.startCity')" />
+                  <span class="route-arrow">→</span>
+                  <input v-model="tripEnd" type="text" :placeholder="$t('widget.endCity')" />
+                </div>
+              </div>
+              <div class="widget-row">
+                <div class="widget-field">
+                  <label>{{ $t('widget.consumption') }} (L/100km)</label>
+                  <input v-model.number="consumption" type="number" min="1" step="0.5" />
+                </div>
+                <div class="widget-field">
+                  <label>{{ $t('widget.fuelType') }}</label>
+                  <select v-model="tripFuelType">
+                    <option value="eurodiesel">{{ $t('fuelTypes.eurodiesel') }}</option>
+                    <option value="bmb95">{{ $t('fuelTypes.bmb95') }}</option>
+                    <option value="lpg">{{ $t('fuelTypes.lpg') }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="widget-result">
+                <div class="result-col">
+                  <span class="result-label">{{ $t('widget.estCost') }} (≈ {{ tripDistance }}km)</span>
+                  <span class="result-value">{{ tripCost.toFixed(0) }} <small>RSD</small></span>
+                </div>
+              </div>
+              <NuxtLink to="/nearby" class="btn-widget">
+                {{ $t('widget.findOnRoute') }}
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
+              </NuxtLink>
+            </template>
           </div>
         </div>
       </div>
@@ -250,6 +305,34 @@ const savings = computed(() => {
   return (avg - cheapest) * liters.value
 })
 
+// Trip Calculator Logic
+const activeWidget = ref('savings')
+const tripStart = ref('Belgrade')
+const tripEnd = ref('Novi Sad')
+const consumption = ref(6.5)
+const tripFuelType = ref('eurodiesel')
+
+// Mock distance since we don't have mapping API on frontend yet
+const tripDistance = computed(() => {
+  if (!tripStart.value || !tripEnd.value) return 0
+  // Fake distance logic to make it reactive for the demo
+  return Math.abs(tripStart.value.length * 12 + tripEnd.value.length * 8)
+})
+
+const tripCost = computed(() => {
+  const litersNeeded = (tripDistance.value / 100) * consumption.value
+  
+  // Fake getting cheapest price for selected fuel mode
+  const prices = fuelCompanies.value.map(c => {
+    let p = c.price
+    if (tripFuelType.value === 'bmb95') p -= 10
+    if (tripFuelType.value === 'lpg') p -= 110
+    return p
+  })
+  const cheapest = Math.min(...prices)
+  return litersNeeded * cheapest
+})
+
 </script>
 
 <style scoped>
@@ -416,6 +499,86 @@ const savings = computed(() => {
   transition: all 0.2s;
 }
 .btn-widget:hover { box-shadow: 0 4px 20px var(--primary-glow); }
+
+/* Widget Tabs */
+.widget-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 0 16px;
+  position: relative;
+  z-index: 3;
+}
+.widget-tabs button {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 10px 0;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s;
+  border-bottom: none;
+}
+.widget-tabs button.active {
+  background: var(--glass-bg);
+  color: var(--primary);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-border);
+}
+.widget-row {
+  display: flex;
+  gap: 12px;
+}
+.widget-row .widget-field {
+  flex: 1;
+}
+.route-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.route-arrow {
+  color: var(--text-muted);
+  font-weight: bold;
+}
+.result-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* News Ticker */
+.news-ticker {
+  background: var(--panel-bg);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0;
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: flex;
+  gap: 40px;
+  animation: scroll-ticker 30s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+.ticker-item {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+@keyframes scroll-ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 /* ── Companies Section ── */
 .companies-section {

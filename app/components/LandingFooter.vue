@@ -13,20 +13,25 @@
       </div>
       <div class="footer-links">
         <h4>{{ $t('footer.companies') }}</h4>
-        <a href="#">NIS Petrol</a>
-        <a href="#">OMV</a>
-        <a href="#">MOL</a>
-        <a href="#">Lukoil</a>
+        <NuxtLink to="/providers">NIS Petrol</NuxtLink>
+        <NuxtLink to="/providers">OMV</NuxtLink>
+        <NuxtLink to="/providers">MOL</NuxtLink>
+        <NuxtLink to="/providers">Lukoil</NuxtLink>
       </div>
       <div class="footer-links">
         <h4>{{ $t('footer.support') }}</h4>
         <NuxtLink to="/faq">{{ $t('footer.faq') }}</NuxtLink>
-        <a href="#">{{ $t('footer.reportPrice') }}</a>
+        <NuxtLink to="/report">{{ $t('footer.reportPrice', 'Report Price') }}</NuxtLink>
         <NuxtLink to="/contact">{{ $t('footer.contact') }}</NuxtLink>
       </div>
     </div>
     <div class="footer-bottom">
       <span>{{ $t('footer.copyright') }}</span>
+      <div class="legal-links">
+        <NuxtLink to="/privacy">Privacy Policy</NuxtLink>
+        <span>&middot;</span>
+        <NuxtLink to="/terms">Terms of Service</NuxtLink>
+      </div>
     </div>
   </footer>
 </template>
@@ -74,9 +79,24 @@
 .footer-bottom {
   border-top: 1px solid var(--border-color);
   padding: 20px 24px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--text-muted);
   font-size: 0.85rem;
+}
+.legal-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.legal-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.legal-links a:hover {
+  color: var(--primary);
 }
 
 @media (max-width: 900px) {

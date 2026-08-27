@@ -1,5 +1,5 @@
 <template>
-  <header class="landing-nav">
+  <header class="landing-nav animate-fade-in">
     <div class="nav-inner">
       <NuxtLink to="/" class="brand">
         <span class="brand-icon">⛽</span>
@@ -110,17 +110,19 @@ onMounted(() => {
   justify-content: center;
 }
 .btn-nav-primary {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: #fff;
   padding: 10px 22px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 .btn-nav-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px var(--primary-glow);
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 6px 20px var(--primary-glow);
 }
 
 @media (max-width: 900px) {

@@ -1,51 +1,60 @@
 :root {
-  /* Tradix-inspired light blue theme (default) */
-  --primary: #3861fb;
-  --primary-hover: #2d4fd4;
-  --primary-glow: rgba(56, 97, 251, 0.25);
-  --primary-subtle: rgba(56, 97, 251, 0.08);
-  --primary-border: rgba(56, 97, 251, 0.2);
+  /* Amber fuel brand — primary drives all accent UI */
+  --primary: #ff6b35;
+  --primary-hover: #e85a28;
+  --primary-glow: rgba(255, 107, 53, 0.28);
+  --primary-subtle: rgba(255, 107, 53, 0.1);
+  --primary-border: rgba(255, 107, 53, 0.28);
+  --fuel-accent: var(--primary);
+  --fuel-accent-hover: var(--primary-hover);
+  --fuel-accent-subtle: var(--primary-subtle);
+  --fuel-accent-border: var(--primary-border);
+  --fuel-gradient: linear-gradient(135deg, #ff6b35 0%, #ff9f43 100%);
   --secondary: #1e293b;
-  --success: #22c55e;
+  --success: #16a34a;
   --danger: #ef4444;
-  --bg-color: #f8f9fc;
+  --bg-color: #f7f8fc;
   --panel-bg: #ffffff;
-  --text-main: #1a1a2e;
+  --text-main: #0f172a;
   --text-muted: #64748b;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.92);
-  --hover-bg: rgba(0, 0, 0, 0.04);
-  --shadow-color: rgba(0, 0, 0, 0.08);
-  --shadow-strong: rgba(0, 0, 0, 0.12);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --hover-bg: rgba(15, 23, 42, 0.04);
+  --shadow-color: rgba(15, 23, 42, 0.06);
+  --shadow-strong: rgba(15, 23, 42, 0.12);
   --on-primary: #ffffff;
-  --landing-nav-bg: rgba(255, 255, 255, 0.95);
+  --landing-nav-bg: rgba(255, 255, 255, 0.96);
   --landing-hero-bg: #ffffff;
-  --landing-section-alt: #f1f4f9;
+  --landing-section-alt: #f1f4fa;
   --map-tiles: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 }
 
 html.dark-mode {
-  --primary: #5b7cfa;
-  --primary-hover: #7090ff;
-  --primary-glow: rgba(91, 124, 250, 0.3);
-  --primary-subtle: rgba(91, 124, 250, 0.12);
-  --primary-border: rgba(91, 124, 250, 0.25);
+  --primary: #ff8c5a;
+  --primary-hover: #ff6b35;
+  --primary-glow: rgba(255, 140, 90, 0.32);
+  --primary-subtle: rgba(255, 140, 90, 0.12);
+  --primary-border: rgba(255, 140, 90, 0.32);
+  --fuel-accent: var(--primary);
+  --fuel-accent-hover: var(--primary-hover);
+  --fuel-accent-subtle: var(--primary-subtle);
+  --fuel-accent-border: var(--primary-border);
   --secondary: #e2e8f0;
   --success: #4ade80;
   --danger: #f87171;
-  --bg-color: #0f1419;
-  --panel-bg: #1a2332;
+  --bg-color: #0c1017;
+  --panel-bg: #161d2b;
   --text-main: #f1f5f9;
   --text-muted: #94a3b8;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(26, 35, 50, 0.88);
-  --hover-bg: rgba(255, 255, 255, 0.06);
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --shadow-strong: rgba(0, 0, 0, 0.5);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(22, 29, 43, 0.92);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --shadow-strong: rgba(0, 0, 0, 0.55);
   --on-primary: #ffffff;
-  --landing-nav-bg: rgba(15, 20, 25, 0.92);
-  --landing-hero-bg: #0f1419;
-  --landing-section-alt: rgba(26, 35, 50, 0.6);
+  --landing-nav-bg: rgba(12, 16, 23, 0.94);
+  --landing-hero-bg: #0c1017;
+  --landing-section-alt: rgba(22, 29, 43, 0.65);
   --map-tiles: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 }
 
@@ -126,10 +135,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px 20px;
   font-weight: 600;
   cursor: pointer;
@@ -138,9 +147,9 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  filter: brightness(1.06);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--primary-glow);
+  box-shadow: 0 6px 22px var(--primary-glow);
 }
 
 .nav-item {
@@ -176,4 +185,60 @@ h1, h2, h3, h4, h5 {
 .page-leave-to {
   opacity: 0;
   transform: translateY(10px);
+}
+
+/* Shared subtitle styles + animation */
+.subtitle,
+.hero-sub,
+.page-subtitle,
+.section-sub {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.subtitle-animate {
+  animation: subtitleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.subtitle-animate::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--fuel-gradient);
+  margin-top: 10px;
+  animation: subtitleUnderline 0.55s ease 0.55s forwards;
+}
+
+.section-sub.subtitle-animate::after,
+.section-sub.centered.subtitle-animate::after,
+.subtitle-animate.centered::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-subtitle-animate {
+  animation: subtitleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  color: var(--text-muted);
+}
+
+.cta-subtitle-animate::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--fuel-gradient);
+  margin: 10px auto 0;
+  animation: subtitleUnderline 0.55s ease 0.55s forwards;
+}
+
+.hero-sub.subtitle-animate::after {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.subtitle-animate.centered {
+  text-align: center;
 }

@@ -284,6 +284,48 @@
       "action": "Akcija"
     }
   },
+  "nearby": {
+    "badge": "Mapa benzinskih stanica",
+    "title": "Stanice u vašoj blizini",
+    "subtitle": "Pronađite najbolje cene, planirajte rutu i uštedite na svakom punjenju.",
+    "yourLocation": "Vaša polazna tačka",
+    "originPlaceholder": "Unesite adresu ili grad...",
+    "useMyLocation": "Koristi moju lokaciju",
+    "findAddress": "Pronađi",
+    "showRoute": "Prikaži rutu na mapi",
+    "showRouteBtn": "Prikaži rutu",
+    "openMaps": "Otvori u Maps",
+    "setOriginFirst": "Prvo postavite polaznu lokaciju.",
+    "locationError": "Lokacija nije dostupna. Unesite adresu ručno.",
+    "myLocation": "Moja trenutna lokacija",
+    "searchPlaceholder": "Pretražite stanicu, brend ili grad...",
+    "bestPrice": "Najniža cena",
+    "loadMore": "Učitaj više stanica",
+    "noResults": "Nema stanica koje odgovaraju pretrazi.",
+    "loadingMap": "Učitavanje mape...",
+    "stats": {
+      "stations": "Stanice",
+      "cheapest": "Najjeftinije",
+      "average": "Prosek"
+    },
+    "filters": {
+      "all": "Sve",
+      "diesel": "Dizel",
+      "petrol": "Benzin",
+      "lpg": "Autogas"
+    },
+    "legend": {
+      "title": "Nivo cene",
+      "low": "Niska cena",
+      "medium": "Prosečna",
+      "high": "Visoka cena",
+      "route": "Vaša ruta"
+    },
+    "layers": {
+      "default": "Podrazumevano",
+      "street": "Ulična mapa"
+    }
+  },
   "charging": {
     "badge": "Mreža EV punjenja",
     "title": "Pronađite EV stanice za punjenje",

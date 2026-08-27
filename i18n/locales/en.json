@@ -284,6 +284,48 @@
       "action": "Action"
     }
   },
+  "nearby": {
+    "badge": "Fuel Station Map",
+    "title": "Fuel Stations Near You",
+    "subtitle": "Find the best prices, plan your route, and save on every fill-up.",
+    "yourLocation": "Your starting point",
+    "originPlaceholder": "Enter your address or city...",
+    "useMyLocation": "Use my location",
+    "findAddress": "Find",
+    "showRoute": "Show route on map",
+    "showRouteBtn": "Show Route",
+    "openMaps": "Open in Maps",
+    "setOriginFirst": "Please set your starting location first.",
+    "locationError": "Could not get your location. Please enter an address.",
+    "myLocation": "My current location",
+    "searchPlaceholder": "Search station, brand, or city...",
+    "bestPrice": "Best Price",
+    "loadMore": "Load more stations",
+    "noResults": "No stations match your search.",
+    "loadingMap": "Loading map...",
+    "stats": {
+      "stations": "Stations",
+      "cheapest": "Cheapest",
+      "average": "Average"
+    },
+    "filters": {
+      "all": "All",
+      "diesel": "Diesel",
+      "petrol": "Petrol",
+      "lpg": "LPG"
+    },
+    "legend": {
+      "title": "Price level",
+      "low": "Low price",
+      "medium": "Average",
+      "high": "High price",
+      "route": "Your route"
+    },
+    "layers": {
+      "default": "Default",
+      "street": "Street map"
+    }
+  },
   "charging": {
     "badge": "EV Charging Network",
     "title": "Find EV Charging Stations",

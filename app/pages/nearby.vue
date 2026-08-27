@@ -90,10 +90,10 @@
                 </div>
               </div>
               <div class="acc-actions">
-                <button class="nav-btn btn-primary" title="Get Directions">
+                <a :href="`https://www.google.com/maps/dir/?api=1&destination=${station.latitude},${station.longitude}`" target="_blank" class="nav-btn btn-primary" title="Get Directions" style="text-decoration: none;">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
                   Get Directions
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -163,11 +163,15 @@ const paginatedStations = computed(() => {
 
 
 const toggleExpanded = (id) => {
-  // if (expandedStationId.value === id) {
-  //   expandedStationId.value = null
-  // } else {
-  //   expandedStationId.value = id
-  // }
+  expandedStationId.value = expandedStationId.value === id ? null : id
+  
+  if (expandedStationId.value && leafletMap && markers[id]) {
+    const station = filteredStations.value.find(s => s.id === id)
+    if (station) {
+      leafletMap.setView([station.latitude, station.longitude], 14, { animate: true })
+      markers[id].marker.openPopup()
+    }
+  }
 }
 let markers = {}
 let mutationObserver = null
@@ -236,6 +240,24 @@ onMounted(async () => {
       attribution: '&copy; CartoDB',
       subdomains: 'abcd',
       maxZoom: 20
+    })
+    
+    currentTileLayer.addTo(leafletMap)
+
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri',
+      maxZoom: 19
+    })
+
+    const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19
+    })
+
+    L.control.layers({
+      "Default (Light/Dark)": currentTileLayer,
+      "Streets": streetLayer,
+      "Satellite": satelliteLayer
     }).addTo(leafletMap)
 
     mutationObserver = new MutationObserver((mutations) => {
@@ -305,7 +327,7 @@ onUnmounted(() => {
 <style scoped>
 .nearby-container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 71px);
 
   background: var(--bg-color);
   overflow: hidden;

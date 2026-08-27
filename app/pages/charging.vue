@@ -116,10 +116,10 @@
             <div v-if="station.amenities.length" class="amenities">
               <span v-for="a in station.amenities" :key="a" class="amenity">{{ $t(`charging.amenities.${a}`) }}</span>
             </div>
-            <button class="nav-btn btn-primary">
+            <a :href="`https://www.google.com/maps/dir/?api=1&destination=${station.latitude},${station.longitude}`" target="_blank" class="nav-btn btn-primary" style="text-decoration: none;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
               {{ $t('charging.getDirections') }}
-            </button>
+            </a>
           </div>
         </div>
 

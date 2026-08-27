@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  css: ['~/assets/css/index.css'],
+  css: ['~/assets/css/index.css', '~/assets/css/animations.css'],
   modules: ['@nuxtjs/i18n'],
   devtools: { enabled: false },
   i18n: {

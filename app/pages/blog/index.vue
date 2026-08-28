@@ -4,7 +4,7 @@
       <div class="hero-inner">
         <span class="hero-badge">{{ $t('blog.badge') }}</span>
         <h1>{{ $t('blog.title') }}</h1>
-        <p class="hero-sub">{{ $t('blog.subtitle') }}</p>
+        <p class="hero-sub subtitle-animate">{{ $t('blog.subtitle') }}</p>
       </div>
     </section>
 
@@ -133,9 +133,10 @@ const filteredPosts = computed(() => {
   color: var(--text-main);
 }
 .filter-btn.active {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary, #fff);
-  border-color: var(--primary);
+  border-color: transparent;
+  box-shadow: 0 2px 12px var(--primary-glow);
 }
 
 .blog-grid {

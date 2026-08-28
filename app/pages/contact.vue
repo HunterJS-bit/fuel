@@ -5,7 +5,7 @@
       <div class="hero-inner">
         <span class="hero-badge">{{ $t('contact.badge') }}</span>
         <h1>{{ $t('contact.title') }}</h1>
-        <p class="hero-sub">{{ $t('contact.subtitle') }}</p>
+        <p class="hero-sub subtitle-animate">{{ $t('contact.subtitle') }}</p>
       </div>
     </section>
 
@@ -249,7 +249,7 @@ const handleSubmit = () => {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
   padding: 14px;
   border-radius: 10px;
@@ -262,6 +262,7 @@ const handleSubmit = () => {
 }
 .btn-submit:hover {
   transform: translateY(-2px);
+  filter: brightness(1.06);
   box-shadow: 0 8px 28px var(--primary-glow);
 }
 .success-message {

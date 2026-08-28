@@ -5,7 +5,7 @@
       <div class="hero-inner">
         <span class="hero-badge">{{ $t('faq.badge') }}</span>
         <h1>{{ $t('faq.title') }}</h1>
-        <p class="hero-sub">{{ $t('faq.subtitle') }}</p>
+        <p class="hero-sub subtitle-animate">{{ $t('faq.subtitle') }}</p>
       </div>
     </section>
 
@@ -49,7 +49,7 @@
     <section class="cta-section">
       <div class="cta-inner">
         <h2>{{ $t('faq.ctaTitle') }}</h2>
-        <p>{{ $t('faq.ctaSubtitle') }}</p>
+        <p class="cta-subtitle-animate">{{ $t('faq.ctaSubtitle') }}</p>
         <div class="cta-buttons">
           <NuxtLink to="/contact" class="btn-primary">{{ $t('faq.contactUs') }}</NuxtLink>
           <NuxtLink to="/nearby" class="btn-outline">{{ $t('faq.findStation') }}</NuxtLink>
@@ -170,9 +170,10 @@ const toggleFaq = (id) => {
   color: var(--text-main);
 }
 .category-btn.active {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
-  border-color: var(--primary);
+  border-color: transparent;
+  box-shadow: 0 2px 12px var(--primary-glow);
 }
 
 .faq-list {
@@ -258,7 +259,7 @@ const toggleFaq = (id) => {
   flex-wrap: wrap;
 }
 .btn-primary {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
   padding: 14px 28px;
   border-radius: 10px;
@@ -269,6 +270,7 @@ const toggleFaq = (id) => {
 }
 .btn-primary:hover {
   transform: translateY(-2px);
+  filter: brightness(1.06);
   box-shadow: 0 8px 28px var(--primary-glow);
 }
 .btn-outline {

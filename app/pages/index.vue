@@ -15,14 +15,14 @@
       </div>
     </div>
     <!-- Hero Section (Tradix-inspired) -->
-    <section class="hero">
+    <section class="hero animate-fade-in-up">
       <div class="hero-inner">
         <div class="hero-content">
-          <span class="hero-badge">{{ $t('hero.badge') }}</span>
-          <h1>
+          <span class="hero-badge animate-fade-in-up animate-delay-1">{{ $t('hero.badge') }}</span>
+          <h1 class="animate-fade-in-up animate-delay-2">
             {{ $t('hero.titlePre') }}<span class="highlight">{{ $t('hero.titleHighlight') }}</span>{{ $t('hero.titlePost') }}
           </h1>
-          <p class="hero-sub">
+          <p class="hero-sub subtitle-animate animate-delay-3">
             {{ $t('hero.subtitle') }}
           </p>
           <div class="hero-cta">
@@ -103,7 +103,7 @@
       <div class="section-inner">
         <span class="section-badge">{{ $t('companies.badge') }}</span>
         <h2>{{ $t('companies.title') }}</h2>
-        <p class="section-sub">{{ $t('companies.subtitle') }}</p>
+        <p class="section-sub subtitle-animate">{{ $t('companies.subtitle') }}</p>
 
         <div class="companies-grid">
           <div
@@ -156,7 +156,7 @@
           <div>
             <span class="section-badge">{{ $t('news.badge') }}</span>
             <h2>{{ $t('news.title') }}</h2>
-            <p class="section-sub">{{ $t('news.subtitle') }}</p>
+            <p class="section-sub subtitle-animate">{{ $t('news.subtitle') }}</p>
           </div>
           <NuxtLink to="/blog" class="view-all-link">{{ $t('news.viewAll') }} →</NuxtLink>
         </div>
@@ -169,7 +169,7 @@
     <!-- Trusted Brands Row -->
     <section class="trusted-section">
       <div class="section-inner">
-        <p>{{ $t('trusted.title') }} <span class="highlight">{{ $t('trusted.country') }}</span></p>
+        <p class="subtitle-animate centered">{{ $t('trusted.title') }} <span class="highlight">{{ $t('trusted.country') }}</span></p>
         <div class="brand-logos">
           <div v-for="brand in trustedBrands" :key="brand" class="brand-logo">{{ brand }}</div>
         </div>
@@ -194,7 +194,7 @@
     <section class="features-section">
       <div class="section-inner">
         <h2>{{ $t('features.title') }}</h2>
-        <p class="section-sub centered">{{ $t('features.subtitle') }}</p>
+        <p class="section-sub centered subtitle-animate">{{ $t('features.subtitle') }}</p>
         <div class="features-grid">
           <div v-for="feature in features" :key="feature.titleKey" class="feature-card">
             <div class="feature-icon" v-html="feature.icon"></div>
@@ -209,7 +209,7 @@
     <section class="cta-section">
       <div class="section-inner cta-inner">
         <h2>{{ $t('cta.title') }}</h2>
-        <p>{{ $t('cta.subtitle') }}</p>
+        <p class="cta-subtitle-animate">{{ $t('cta.subtitle') }}</p>
         <NuxtLink to="/nearby" class="btn-primary-lg">{{ $t('cta.button') }}</NuxtLink>
       </div>
     </section>
@@ -383,7 +383,7 @@ const tripCost = computed(() => {
   letter-spacing: -0.03em;
 }
 .highlight { 
-  background: linear-gradient(90deg, #3861fb, #00e676);
+  background: var(--fuel-gradient, linear-gradient(90deg, #ff6b35, #ff9f43));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
@@ -401,19 +401,20 @@ const tripCost = computed(() => {
   flex-wrap: wrap;
 }
 .btn-primary-lg {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: #fff;
   padding: 14px 28px;
   border-radius: 10px;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0 4px 20px var(--primary-glow);
 }
 .btn-primary-lg:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 230, 118, 0.45);
+  filter: brightness(1.06);
+  box-shadow: 0 8px 28px rgba(255, 107, 53, 0.4);
 }
 .btn-outline-lg {
   border: 2px solid var(--primary);
@@ -426,7 +427,7 @@ const tripCost = computed(() => {
   transition: all 0.2s;
 }
 .btn-outline-lg:hover {
-  background: rgba(0, 230, 118, 0.08);
+  background: var(--primary-subtle);
 }
 
 /* Widget */
@@ -490,15 +491,18 @@ const tripCost = computed(() => {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  background: var(--primary);
+  background: var(--fuel-gradient, var(--fuel-accent));
   color: #ffffff;
   padding: 14px;
   border-radius: 10px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.btn-widget:hover { box-shadow: 0 4px 20px var(--primary-glow); }
+.btn-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35);
+}
 
 /* Widget Tabs */
 .widget-tabs {
@@ -665,13 +669,14 @@ const tripCost = computed(() => {
 }
 .lowest-badge {
   margin-left: auto;
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: #ffffff;
   font-size: 0.7rem;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 20px;
   text-transform: uppercase;
+  box-shadow: 0 2px 8px var(--primary-glow);
 }
 .card-price {
   margin-bottom: 8px;
@@ -805,7 +810,7 @@ const tripCost = computed(() => {
 .step-number {
   width: 48px;
   height: 48px;
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: #ffffff;
   border-radius: 50%;
   display: flex;
@@ -814,6 +819,7 @@ const tripCost = computed(() => {
   font-weight: 800;
   font-size: 1.2rem;
   margin: 0 auto 20px;
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 .step-card h3 {
   font-size: 1.1rem;

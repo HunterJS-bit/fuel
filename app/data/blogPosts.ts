@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'best-time-to-fill-up-belgrade',
     date: '2026-08-08',
     categoryKey: 'blog.categories.tips',
-    imageGradient: 'linear-gradient(135deg, #3861fb 0%, #1a3a99 100%)',
+    imageGradient: 'linear-gradient(135deg, #ff6b35 0%, #cc4a1a 100%)',
     titleKey: 'blog.posts.p4.title',
     excerptKey: 'blog.posts.p4.excerpt',
     contentKey: 'blog.posts.p4.content',

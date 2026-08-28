@@ -57,7 +57,7 @@ const switchLanguage = (code) => {
 }
 
 .lang-btn.active {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
 }
 </style>

@@ -52,27 +52,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-
-const selectedFuel = ref("eurodiesel");
-const isDark = ref(true);
-
-const toggleTheme = () => {
-  isDark.value = !isDark.value;
-  if (process.client) {
-    if (isDark.value) {
-      document.documentElement.classList.remove("light-mode");
-    } else {
-      document.documentElement.classList.add("light-mode");
-    }
-  }
-};
+const selectedFuel = ref('eurodiesel')
+const { isDark, toggleTheme, initTheme } = useTheme()
 
 onMounted(() => {
-  if (process.client) {
-    isDark.value = !document.documentElement.classList.contains("light-mode");
-  }
-});
+  initTheme()
+})
 </script>
 
 <style scoped>

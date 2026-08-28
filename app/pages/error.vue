@@ -3,7 +3,7 @@
     <div class="error-content">
       <h1 class="error-code">404</h1>
       <h2>{{ $t('error.title') }}</h2>
-      <p class="error-message">{{ $t('error.message') }}</p>
+      <p class="error-message subtitle-animate">{{ $t('error.message') }}</p>
       <div class="error-actions">
         <NuxtLink to="/" class="btn-primary">{{ $t('error.goHome') }}</NuxtLink>
       </div>
@@ -51,7 +51,7 @@ definePageMeta({ layout: 'landing' })
   flex-wrap: wrap;
 }
 .btn-primary {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary);
   padding: 14px 28px;
   border-radius: 10px;
@@ -62,6 +62,7 @@ definePageMeta({ layout: 'landing' })
 }
 .btn-primary:hover {
   transform: translateY(-2px);
+  filter: brightness(1.06);
   box-shadow: 0 8px 28px var(--primary-glow);
 }
 .btn-outline {

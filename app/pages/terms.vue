@@ -3,7 +3,7 @@
     <section class="legal-hero">
       <div class="hero-inner">
         <h1>Terms of Service</h1>
-        <p class="hero-sub">Last updated: August 24, 2026</p>
+        <p class="hero-sub subtitle-animate">Last updated: August 24, 2026</p>
       </div>
     </section>
 

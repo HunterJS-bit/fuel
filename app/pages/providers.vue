@@ -4,7 +4,7 @@
       <div class="hero-inner">
         <span class="section-badge">{{ $t('providers.badge') }}</span>
         <h1>{{ $t('providers.title') }}</h1>
-        <p class="hero-sub">{{ $t('providers.subtitle') }}</p>
+        <p class="hero-sub subtitle-animate">{{ $t('providers.subtitle') }}</p>
       </div>
     </section>
 
@@ -290,7 +290,7 @@ const chartOptions = {
   background: rgba(255,255,255,0.02);
 }
 .providers-table tbody tr.best-price-row {
-  background: linear-gradient(90deg, rgba(0, 230, 118, 0.03) 0%, transparent 50%);
+  background: linear-gradient(90deg, var(--primary-subtle) 0%, transparent 50%);
 }
 
 .company-cell {
@@ -358,9 +358,10 @@ const chartOptions = {
   transition: all 0.2s;
 }
 .view-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--fuel-gradient);
+  border-color: transparent;
   color: #fff;
+  box-shadow: 0 2px 12px var(--primary-glow);
 }
 
 /* Chart */
@@ -400,7 +401,7 @@ const chartOptions = {
   color: var(--text-main);
 }
 .fuel-btn.active {
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: #fff;
   box-shadow: 0 2px 10px var(--primary-glow);
 }

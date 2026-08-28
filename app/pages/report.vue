@@ -4,7 +4,7 @@
       <div class="hero-inner">
         <span class="hero-badge">Help Us Out</span>
         <h1>Report a Price</h1>
-        <p class="hero-sub">Help the community by sharing the latest fuel prices at your local station.</p>
+        <p class="hero-sub subtitle-animate">Help the community by sharing the latest fuel prices at your local station.</p>
       </div>
     </section>
 
@@ -204,7 +204,7 @@ const handleSubmit = () => {
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 .form-group textarea {
   resize: vertical;
@@ -215,7 +215,7 @@ const handleSubmit = () => {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  background: var(--primary);
+  background: var(--fuel-gradient);
   color: var(--on-primary, #fff);
   padding: 16px;
   border-radius: 12px;
@@ -229,14 +229,15 @@ const handleSubmit = () => {
 }
 .btn-submit:hover {
   transform: translateY(-2px);
+  filter: brightness(1.06);
   box-shadow: 0 8px 28px var(--primary-glow);
 }
 .success-message {
   margin-top: 24px;
   padding: 16px;
-  background: rgba(34, 197, 94, 0.1);
-  color: var(--success);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
   border-radius: 12px;
   text-align: center;
   font-weight: 600;

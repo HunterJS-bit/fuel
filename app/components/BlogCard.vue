@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/blog/${post.slug}`" class="blog-card">
-    <div class="card-image" :style="{ backgroundImage: `url(https://picsum.photos/seed/${post.slug}/600/400)`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+    <div class="card-image" :style="{ backgroundImage: `url(https://placehold.co/600x400/1e293b/fff?text=${post.slug})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
       <span class="card-category">{{ $t(post.categoryKey) }}</span>
     </div>
     <div class="card-body">

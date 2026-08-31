@@ -1,6 +1,6 @@
 <template>
   <div v-if="post" class="article-page">
-    <section class="article-hero" :style="{ backgroundImage: `url(https://picsum.photos/seed/${post.slug}/1200/600)`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+    <section class="article-hero" :style="{ backgroundImage: `url(https://placehold.co/1200x600/1e293b/fff?text=${post.slug})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
       <div class="hero-overlay">
         <NuxtLink to="/blog" class="back-link">← {{ $t('blog.backToBlog') }}</NuxtLink>
         <span class="article-category">{{ $t(post.categoryKey) }}</span>

@@ -11,6 +11,26 @@
     <!-- Provider Directory Table -->
     <section class="directory-section">
       <div class="section-inner">
+        <div class="providers-filters">
+          <div class="filter-group">
+            <label>{{ $t('providers.filterFuel', 'Fuel Type') }}</label>
+            <select v-model="filterFuel">
+               <option value="all">{{ $t('providers.allFuels', 'All Fuels') }}</option>
+               <option value="eurodiesel">Euro Diesel</option>
+               <option value="bmb95">BMB 95</option>
+               <option value="lpg">LPG</option>
+               <option value="bmb100">BMB 100</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>{{ $t('providers.sortBy', 'Sort By') }}</label>
+            <select v-model="sortBy">
+               <option value="price_asc">{{ $t('providers.sortPriceAsc', 'Price: Low to High') }}</option>
+               <option value="price_desc">{{ $t('providers.sortPriceDesc', 'Price: High to Low') }}</option>
+               <option value="stations">{{ $t('providers.sortStations', 'Most Stations') }}</option>
+            </select>
+          </div>
+        </div>
         <div class="table-container">
           <table class="providers-table">
             <thead>
@@ -25,7 +45,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="provider in providersList" :key="provider.id" :class="{ 'best-price-row': provider.isLowest }">
+              <tr v-for="provider in filteredProviders" :key="provider.id" :class="{ 'best-price-row': provider.isLowest }">
                 <td>
                   <div class="company-cell">
                     <div class="company-logo" :style="{ background: provider.color }">{{ provider.initials }}</div>
@@ -105,6 +125,9 @@ ChartJS.register(
 
 const { t } = useI18n()
 
+const filterFuel = ref('all')
+const sortBy = ref('price_asc')
+
 // Data
 const providersList = ref([
   { id: 1, name: 'NIS Petrol', slug: 'nis', initials: 'NIS', color: '#0066cc', stations: 312, isLowest: false, lowestFor: null, prices: { eurodiesel: 195.0, bmb95: 185.0, lpg: 88.0, bmb100: 198.0 } },
@@ -118,6 +141,32 @@ const providersList = ref([
 ])
 
 const activeChartFuel = ref('eurodiesel')
+
+const filteredProviders = computed(() => {
+  let list = [...providersList.value]
+  
+  if (sortBy.value === 'stations') {
+    list.sort((a, b) => b.stations - a.stations)
+  } else {
+    const sortFuel = filterFuel.value !== 'all' ? filterFuel.value : 'eurodiesel'
+    list.sort((a, b) => {
+       const diff = (a.prices[sortFuel] || 0) - (b.prices[sortFuel] || 0)
+       return sortBy.value === 'price_asc' ? diff : -diff
+    })
+  }
+
+  if (filterFuel.value !== 'all') {
+    const minVal = Math.min(...list.map(p => p.prices[filterFuel.value]))
+    const labelMap = { 'eurodiesel': 'Euro Diesel', 'bmb95': 'BMB 95', 'lpg': 'LPG', 'bmb100': 'BMB 100' }
+    list = list.map(p => ({
+      ...p,
+      isLowest: p.prices[filterFuel.value] === minVal,
+      lowestFor: labelMap[filterFuel.value]
+    }))
+  }
+
+  return list
+})
 
 // Generating some fake historical data for the chart based on the current prices.
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
@@ -251,6 +300,47 @@ const chartOptions = {
 .section-inner {
   max-width: 1200px;
   margin: 0 auto;
+}
+.providers-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  background: var(--panel-bg);
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  align-items: center;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.filter-group select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  cursor: pointer;
+}
+.filter-group select:focus {
+  border-color: var(--primary);
+}
+@media (max-width: 600px) {
+  .providers-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 .table-container {
   background: var(--panel-bg);

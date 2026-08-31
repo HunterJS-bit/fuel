@@ -84,7 +84,11 @@
               </div>
               <div class="widget-result">
                 <div class="result-col">
-                  <span class="result-label">{{ $t('widget.estCost') }} (≈ {{ tripDistance }}km)</span>
+                  <span class="result-label">
+                    {{ $t('widget.estCost') }} 
+                    <span v-if="isCalculatingRoute">...</span>
+                    <span v-else-if="tripDistance > 0">(≈ {{ tripDistance.toFixed(0) }}km)</span>
+                  </span>
                   <span class="result-value">{{ tripCost.toFixed(0) }} <small>RSD</small></span>
                 </div>
               </div>
@@ -220,8 +224,9 @@
 <script setup>
 definePageMeta({ layout: 'landing' })
 
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { getLatestPosts } from '~/data/blogPosts'
+import { geocodeAddress, fetchRoute } from '~/utils/geocoding'
 
 const latestPosts = getLatestPosts(3)
 
@@ -312,11 +317,48 @@ const tripEnd = ref('Novi Sad')
 const consumption = ref(6.5)
 const tripFuelType = ref('eurodiesel')
 
-// Mock distance since we don't have mapping API on frontend yet
-const tripDistance = computed(() => {
-  if (!tripStart.value || !tripEnd.value) return 0
-  // Fake distance logic to make it reactive for the demo
-  return Math.abs(tripStart.value.length * 12 + tripEnd.value.length * 8)
+const tripDistance = ref(0)
+const tripDuration = ref(0)
+const isCalculatingRoute = ref(false)
+let routeTimeout = null
+
+const calculateRoute = () => {
+  if (routeTimeout) clearTimeout(routeTimeout)
+  if (!tripStart.value || !tripEnd.value) {
+    tripDistance.value = 0
+    tripDuration.value = 0
+    return
+  }
+  isCalculatingRoute.value = true
+  routeTimeout = setTimeout(async () => {
+    try {
+      const [startResults, endResults] = await Promise.all([
+        geocodeAddress(tripStart.value),
+        geocodeAddress(tripEnd.value)
+      ])
+      if (startResults.length > 0 && endResults.length > 0) {
+        const start = startResults[0]
+        const end = endResults[0]
+        const route = await fetchRoute(start.lat, start.lon, end.lat, end.lon)
+        if (route) {
+          tripDistance.value = route.distanceKm
+          tripDuration.value = route.durationMin
+        }
+      }
+    } catch(e) {
+      console.error(e)
+    } finally {
+      isCalculatingRoute.value = false
+    }
+  }, 800)
+}
+
+watch([tripStart, tripEnd], () => {
+  calculateRoute()
+})
+
+onMounted(() => {
+  calculateRoute()
 })
 
 const tripCost = computed(() => {
@@ -385,6 +427,7 @@ const tripCost = computed(() => {
 .highlight { 
   background: var(--fuel-gradient, linear-gradient(90deg, #ff6b35, #ff9f43));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }

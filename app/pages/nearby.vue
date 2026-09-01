@@ -88,6 +88,13 @@
 
       <div class="filter-chips animate-fade-in-up animate-delay-3">
         <button
+          v-if="selectedProviderSlug"
+          class="chip active"
+          @click="$router.push({ query: { ...$route.query, provider: undefined } })"
+        >
+          {{ selectedProviderSlug.toUpperCase() }} &times;
+        </button>
+        <button
           v-for="filter in fuelFilters"
           :key="filter.key"
           class="chip"
@@ -218,14 +225,17 @@ import {
   selectStationsForViewport,
   type FuelFilter
 } from '~/utils/mapStations'
+import type { Station } from '~/utils/fetchStations'
 
 const { t } = useI18n()
+const route = useRoute()
 
 const searchQuery = ref('')
 const fuelFilter = ref<FuelFilter>('all')
-const stations = ref([])
-const selectedStationId = ref(null)
-const hoveredStationId = ref(null)
+const selectedProviderSlug = computed(() => route.query.provider ? String(route.query.provider).toLowerCase() : '')
+const stations = ref<Station[]>([])
+const selectedStationId = ref<string | null>(null)
+const hoveredStationId = ref<string | null>(null)
 const isMapLoading = ref(true)
 const limit = ref(20)
 
@@ -240,12 +250,12 @@ const routeInfo = ref<{ distanceKm: number; durationMin: number } | null>(null)
 const routeLayerActive = ref(false)
 const sortBy = ref<'price' | 'distance'>('price')
 
-let leafletMap = null
-let markerClusterGroup = null
-let routeLayer = null
-let originMarker = null
-let mutationObserver = null
-const markerRefs = {}
+let leafletMap: any = null
+let markerClusterGroup: any = null
+let routeLayer: any = null
+let originMarker: any = null
+let mutationObserver: MutationObserver | null = null
+const markerRefs: Record<string, any> = {}
 
 const fuelFilters = [
   { key: 'all', labelKey: 'nearby.filters.all', color: null },
@@ -262,6 +272,10 @@ const enrichedStations = computed(() =>
 
 const filteredStations = computed(() => {
   let result = enrichedStations.value
+
+  if (selectedProviderSlug.value) {
+    result = result.filter((s) => s.brand?.toLowerCase().includes(selectedProviderSlug.value))
+  }
 
   if (searchQuery.value.trim()) {
     const q = searchQuery.value.toLowerCase()
@@ -476,10 +490,26 @@ const updateMapMarkers = () => {
       iconAnchor: [24, 56]
     })
 
+    const allFuelsHtml = (station.fuels || []).map(f => `<span style="display:inline-block; margin-right:4px; padding:2px 6px; background:var(--panel-bg); border:1px solid var(--border-color); border-radius:4px; font-size:0.75rem">${f}</span>`).join('');
+    const hoursHtml = station.hours ? `<div style="margin-top:6px; font-size:0.85rem; color:var(--success, #16a34a)">${station.hours.includes('00-24') ? '00-24 Open' : station.hours}</div>` : '';
+    const dirUrl = directionsUrl(station);
+    const popupContent = `
+      <div class="fuel-popup" style="min-width: 180px; font-family: 'Outfit', sans-serif;">
+        <h4 style="margin:0 0 4px 0; font-size:1.05rem; color:var(--text-main)">${station.name}</h4>
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px">${station.brand} · ${station.address}</div>
+        <div style="margin-bottom:8px;">
+          <strong>${(station.price || 0).toFixed(1)} RSD</strong>
+        </div>
+        <div style="margin-bottom:8px;">
+          ${allFuelsHtml}
+        </div>
+        ${hoursHtml}
+        <a href="${dirUrl}" target="_blank" style="display:inline-block; margin-top:10px; width:100%; text-align:center; padding:8px; background:var(--fuel-gradient); color:#fff; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.85rem;">Directions</a>
+      </div>
+    `;
+
     const marker = L.marker([station.latitude, station.longitude], { icon })
-      .bindPopup(
-        `<div class="fuel-popup"><b>${station.name}</b><br>${station.brand}<br><strong>${(station.price || 0).toFixed(1)} RSD</strong></div>`
-      )
+      .bindPopup(popupContent)
       .on('click', () => {
         selectedStationId.value = station.id
         updateMapMarkers()
@@ -522,9 +552,9 @@ onMounted(async () => {
   const isLight = !document.documentElement.classList.contains('dark-mode')
   const tileLayer = L.tileLayer(
     isLight
-      ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    { attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 20 }
+      ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '&copy; OpenStreetMap contributors', maxZoom: 20 }
   ).addTo(leafletMap)
 
   const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -542,8 +572,8 @@ onMounted(async () => {
     const dark = document.documentElement.classList.contains('dark-mode')
     tileLayer.setUrl(
       dark
-        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+        ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     )
   })
   mutationObserver.observe(document.documentElement, { attributes: true })

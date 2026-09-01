@@ -9,7 +9,7 @@
           {{ $t('charging.badge') }}
         </div>
         <h1 class="page-title">{{ $t('charging.title') }}</h1>
-        <p class="subtitle">{{ $t('charging.subtitle') }}</p>
+        <p class="subtitle subtitle-animate">{{ $t('charging.subtitle') }}</p>
       </div>
 
       <div class="stats-row">
@@ -249,12 +249,12 @@ onMounted(async () => {
     minZoom: 6
   }).setView([44.0, 21.0], 7)
 
-  const isLightMode = document.documentElement.classList.contains('light-mode')
+  const isDark = document.documentElement.classList.contains('dark-mode')
   const currentTileLayer = L.tileLayer(
-    isLightMode
-      ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    { attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 20 }
+    isDark
+      ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '&copy; OpenStreetMap contributors', maxZoom: 20 }
   )
   
   currentTileLayer.addTo(leafletMap)
@@ -276,11 +276,11 @@ onMounted(async () => {
   }).addTo(leafletMap)
 
   mutationObserver = new MutationObserver(() => {
-    const lightNow = document.documentElement.classList.contains('light-mode')
+    const darkNow = document.documentElement.classList.contains('dark-mode')
     currentTileLayer.setUrl(
-      lightNow
-        ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+      darkNow
+        ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     )
   })
   mutationObserver.observe(document.documentElement, { attributes: true })
@@ -352,14 +352,14 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(34, 197, 94, 0.12);
-  color: #22c55e;
+  background: var(--primary-subtle);
+  color: var(--primary);
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 12px;
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  border: 1px solid var(--primary-border);
 }
 
 .page-title {
@@ -390,8 +390,8 @@ onUnmounted(() => {
 }
 
 .stat-chip.available {
-  border-color: rgba(34, 197, 94, 0.3);
-  background: rgba(34, 197, 94, 0.06);
+  border-color: var(--primary-border);
+  background: var(--primary-subtle);
 }
 
 .stat-value {
@@ -402,7 +402,7 @@ onUnmounted(() => {
 }
 
 .stat-chip.available .stat-value {
-  color: #22c55e;
+  color: var(--primary);
 }
 
 .stat-label {
@@ -438,8 +438,8 @@ onUnmounted(() => {
 }
 
 .location-search:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .filter-chips {
@@ -501,8 +501,8 @@ onUnmounted(() => {
 }
 
 .station-card.selected {
-  border-left-color: #22c55e;
-  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3);
+  border-left-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary-border);
 }
 
 .card-top {
@@ -629,12 +629,19 @@ onUnmounted(() => {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: #22c55e;
+  background: var(--fuel-gradient);
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
   font-family: inherit;
+  text-decoration: none;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.nav-btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 .empty-feed {

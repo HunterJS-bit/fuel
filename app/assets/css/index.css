@@ -26,7 +26,7 @@
   --landing-nav-bg: rgba(255, 255, 255, 0.96);
   --landing-hero-bg: #ffffff;
   --landing-section-alt: #f1f4fa;
-  --map-tiles: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  --map-tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 }
 
 html.dark-mode {
@@ -55,7 +55,7 @@ html.dark-mode {
   --landing-nav-bg: rgba(12, 16, 23, 0.94);
   --landing-hero-bg: #0c1017;
   --landing-section-alt: rgba(22, 29, 43, 0.65);
-  --map-tiles: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  --map-tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 }
 
 * {

@@ -284,6 +284,26 @@
       "action": "Action"
     }
   },
+  "report": {
+    "badge": "Help Us Out",
+    "title": "Report a Price",
+    "subtitle": "Help the community by sharing the latest fuel prices at your local station.",
+    "form": {
+      "brand": "Station Brand / Name",
+      "selectBrand": "Select a brand...",
+      "brandOther": "Other (specify in notes)",
+      "location": "City / Address",
+      "locationPlaceholder": "e.g. Belgrade, Jurija Gagarina 23",
+      "fuelType": "Fuel Type",
+      "selectFuel": "Select fuel type...",
+      "price": "Price (RSD)",
+      "pricePlaceholder": "e.g. 195.5",
+      "notes": "Additional Notes (Optional)",
+      "notesPlaceholder": "Any other details...",
+      "submit": "Submit Report",
+      "success": "Thank you! Your price report has been submitted successfully and is pending review."
+    }
+  },
   "nearby": {
     "badge": "Fuel Station Map",
     "title": "Fuel Stations Near You",

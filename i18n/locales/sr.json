@@ -284,6 +284,26 @@
       "action": "Akcija"
     }
   },
+  "report": {
+    "badge": "Pomozite nam",
+    "title": "Prijavi cenu",
+    "subtitle": "Zajednici puno znači svaka podeljena cena goriva sa vaše lokalne stanice.",
+    "form": {
+      "brand": "Brend / Ime stanice",
+      "selectBrand": "Izaberite brend...",
+      "brandOther": "Ostalo (navedite u napomenama)",
+      "location": "Grad / Adresa",
+      "locationPlaceholder": "npr. Beograd, Jurija Gagarina 23",
+      "fuelType": "Tip goriva",
+      "selectFuel": "Izaberite tip goriva...",
+      "price": "Cena (RSD)",
+      "pricePlaceholder": "npr. 195.5",
+      "notes": "Dodatne napomene (Opciono)",
+      "notesPlaceholder": "Bilo kakvi drugi detalji...",
+      "submit": "Pošalji prijavu",
+      "success": "Hvala vam! Vaša prijava cene je uspešno poslata."
+    }
+  },
   "nearby": {
     "badge": "Mapa benzinskih stanica",
     "title": "Stanice u vašoj blizini",

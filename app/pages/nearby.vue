@@ -550,15 +550,15 @@ onMounted(async () => {
   }).setView([44.0, 21.0], 7)
 
   const isLight = !document.documentElement.classList.contains('dark-mode')
-  const lightTileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-  const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
   const tileLayer = L.tileLayer(
-    isLight ? lightTileUrl : darkTileUrl,
-    { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', maxZoom: 20 }
+    isLight
+      ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '&copy; OpenStreetMap contributors', maxZoom: 20 }
   ).addTo(leafletMap)
 
   const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '&copy; OSM',
     maxZoom: 19
   })
 
@@ -570,7 +570,11 @@ onMounted(async () => {
 
   mutationObserver = new MutationObserver(() => {
     const dark = document.documentElement.classList.contains('dark-mode')
-    tileLayer.setUrl(dark ? darkTileUrl : lightTileUrl)
+    tileLayer.setUrl(
+      dark
+        ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    )
   })
   mutationObserver.observe(document.documentElement, { attributes: true })
 

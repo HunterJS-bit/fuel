@@ -250,13 +250,13 @@ onMounted(async () => {
   }).setView([44.0, 21.0], 7)
 
   const isDark = document.documentElement.classList.contains('dark-mode')
-  const lightTileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-  const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
   const currentTileLayer = L.tileLayer(
-    isDark ? darkTileUrl : lightTileUrl,
-    { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', maxZoom: 20 }
+    isDark
+      ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '&copy; OpenStreetMap contributors', maxZoom: 20 }
   )
-
+  
   currentTileLayer.addTo(leafletMap)
 
   const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -277,7 +277,11 @@ onMounted(async () => {
 
   mutationObserver = new MutationObserver(() => {
     const darkNow = document.documentElement.classList.contains('dark-mode')
-    currentTileLayer.setUrl(darkNow ? darkTileUrl : lightTileUrl)
+    currentTileLayer.setUrl(
+      darkNow
+        ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    )
   })
   mutationObserver.observe(document.documentElement, { attributes: true })
 

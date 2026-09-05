@@ -2,9 +2,9 @@
   <div class="report-page">
     <section class="report-hero">
       <div class="hero-inner">
-        <span class="hero-badge">Help Us Out</span>
-        <h1>Report a Price</h1>
-        <p class="hero-sub subtitle-animate">Help the community by sharing the latest fuel prices at your local station.</p>
+        <span class="hero-badge">{{ $t('report.badge') }}</span>
+        <h1>{{ $t('report.title') }}</h1>
+        <p class="hero-sub subtitle-animate">{{ $t('report.subtitle') }}</p>
       </div>
     </section>
 
@@ -13,34 +13,34 @@
         <div class="report-form-section">
           <form class="report-form" @submit.prevent="handleSubmit">
             <div class="form-group">
-              <label>Station Brand / Name</label>
+              <label>{{ $t('report.form.brand') }}</label>
               <select v-model="formData.brand" required>
-                <option value="">Select a brand...</option>
+                <option value="">{{ $t('report.form.selectBrand') }}</option>
                 <option value="NIS Petrol">NIS Petrol</option>
                 <option value="OMV">OMV</option>
                 <option value="MOL">MOL</option>
                 <option value="Lukoil">Lukoil</option>
                 <option value="Eco">Eco</option>
                 <option value="Petrol">Petrol</option>
-                <option value="Other">Other (specify in notes)</option>
+                <option value="Other">{{ $t('report.form.brandOther') }}</option>
               </select>
             </div>
             
             <div class="form-group">
-              <label>City / Address</label>
+              <label>{{ $t('report.form.location') }}</label>
               <input 
                 v-model="formData.location" 
                 type="text" 
-                placeholder="e.g. Belgrade, Jurija Gagarina 23"
+                :placeholder="$t('report.form.locationPlaceholder')"
                 required
               />
             </div>
 
             <div class="form-row">
               <div class="form-group flex-1">
-                <label>Fuel Type</label>
+                <label>{{ $t('report.form.fuelType') }}</label>
                 <select v-model="formData.fuelType" required>
-                  <option value="">Select fuel type...</option>
+                  <option value="">{{ $t('report.form.selectFuel') }}</option>
                   <option value="Euro Diesel">Euro Diesel</option>
                   <option value="BMB 95">BMB 95</option>
                   <option value="BMB 100">BMB 100</option>
@@ -48,34 +48,34 @@
                 </select>
               </div>
               <div class="form-group flex-1">
-                <label>Price (RSD)</label>
+                <label>{{ $t('report.form.price') }}</label>
                 <input 
                   v-model.number="formData.price" 
                   type="number" 
                   step="0.1" 
-                  placeholder="e.g. 195.5"
+                  :placeholder="$t('report.form.pricePlaceholder')"
                   required
                 />
               </div>
             </div>
 
             <div class="form-group">
-              <label>Additional Notes (Optional)</label>
+              <label>{{ $t('report.form.notes') }}</label>
               <textarea 
                 v-model="formData.notes" 
                 rows="3" 
-                placeholder="Any other details..."
+                :placeholder="$t('report.form.notesPlaceholder')"
               ></textarea>
             </div>
 
             <button type="submit" class="btn-submit">
-              Submit Report
+              {{ $t('report.form.submit') }}
               <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
             </button>
           </form>
           
           <div v-if="submitted" class="success-message">
-            Thank you! Your price report has been submitted successfully and is pending review.
+            {{ $t('report.form.success') }}
           </div>
         </div>
       </div>

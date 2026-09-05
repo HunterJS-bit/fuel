@@ -512,7 +512,6 @@ const updateMapMarkers = () => {
       .bindPopup(popupContent)
       .on('click', () => {
         selectedStationId.value = station.id
-        updateMapMarkers()
       })
 
     markerClusterGroup.addLayer(marker)
@@ -520,8 +519,37 @@ const updateMapMarkers = () => {
   })
 }
 
-watch([filteredStations, selectedStationId, hoveredStationId], () => {
+const updateMarkerIcons = () => {
+  if (!window.L) return
+  const L = window.L
+  const bestId = filteredStations.value[0]?.id
+
+  Object.entries(markerRefs).forEach(([id, marker]) => {
+    const station = filteredStations.value.find((s) => s.id === id)
+    if (!station) return
+
+    const tier = getStationTier(station)
+    const isBest = station.id === bestId
+    const isSelected = station.id === selectedStationId.value
+
+    const icon = L.divIcon({
+      className: 'fuel-charging-marker',
+      html: buildFuelMarkerHtml(station.price || 0, tier, isBest, isSelected),
+      iconSize: [48, 56],
+      iconAnchor: [24, 56]
+    })
+    
+    // @ts-ignore
+    marker.setIcon(icon)
+  })
+}
+
+watch([filteredStations], () => {
   updateMapMarkers()
+})
+
+watch([selectedStationId, hoveredStationId], () => {
+  updateMarkerIcons()
 })
 
 onMounted(async () => {

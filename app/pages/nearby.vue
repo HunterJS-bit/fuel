@@ -256,6 +256,7 @@ let routeLayer: any = null
 let originMarker: any = null
 let mutationObserver: MutationObserver | null = null
 const markerRefs: Record<string, any> = {}
+let updateMarkersTimeout: ReturnType<typeof setTimeout> | null = null
 
 const fuelFilters = [
   { key: 'all', labelKey: 'nearby.filters.all', color: null },
@@ -545,7 +546,10 @@ const updateMarkerIcons = () => {
 }
 
 watch([filteredStations], () => {
-  updateMapMarkers()
+  if (updateMarkersTimeout) clearTimeout(updateMarkersTimeout)
+  updateMarkersTimeout = setTimeout(() => {
+    updateMapMarkers()
+  }, 200)
 })
 
 watch([selectedStationId, hoveredStationId], () => {
@@ -614,7 +618,12 @@ onMounted(async () => {
   })
   leafletMap.addLayer(markerClusterGroup)
 
-  leafletMap.on('moveend zoomend', updateMapMarkers)
+  leafletMap.on('moveend zoomend', () => {
+    if (updateMarkersTimeout) clearTimeout(updateMarkersTimeout)
+    updateMarkersTimeout = setTimeout(() => {
+      updateMapMarkers()
+    }, 300)
+  })
 
   updateMapMarkers()
   setTimeout(() => { isMapLoading.value = false }, 400)
@@ -623,6 +632,7 @@ onMounted(async () => {
 onUnmounted(() => {
   mutationObserver?.disconnect()
   clearRoute()
+  if (updateMarkersTimeout) clearTimeout(updateMarkersTimeout)
 })
 </script>
 

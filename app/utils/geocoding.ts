@@ -12,8 +12,16 @@ export interface RouteResult {
 
 export async function geocodeAddress(query: string): Promise<GeocodeResult[]> {
   if (!query.trim()) return []
-  const data = await $fetch<GeocodeResult[]>('/api/geocode', { query: { q: query } })
-  return data
+  try {
+    const data = await $fetch<GeocodeResult[]>('/api/geocode', { 
+      query: { q: query },
+      timeout: 10000
+    })
+    return data || []
+  } catch (error) {
+    console.error('Geocoding error:', error)
+    return []
+  }
 }
 
 export async function fetchRoute(

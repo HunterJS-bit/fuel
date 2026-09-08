@@ -27,6 +27,28 @@
           </p>
           <div class="hero-cta">
           </div>
+
+          <!-- Integrated Today's Prices -->
+          <div class="hero-today-prices animate-fade-in-up animate-delay-4">
+            <div class="htp-header">
+              <span class="htp-title">{{ $t('todayPrices.title') }}</span>
+              <span class="htp-date">{{ $t('todayPrices.dateValid') }} <strong>{{ currentDateFormated }}</strong></span>
+            </div>
+            <div class="htp-grid">
+              <div class="htp-item">
+                <span class="htp-label">{{ $t('fuelTypes.eurodiesel') }}</span>
+                <span class="htp-value">{{ todayDieselPrice }} <small>RSD</small></span>
+              </div>
+              <div class="htp-item">
+                <span class="htp-label">{{ $t('fuelTypes.bmb95') }}</span>
+                <span class="htp-value">{{ todayPetrolPrice }} <small>RSD</small></span>
+              </div>
+              <div class="htp-item">
+                <span class="htp-label">{{ $t('fuelTypes.lpg') }}</span>
+                <span class="htp-value">{{ todayLpgPrice }} <small>RSD</small></span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="hero-widget">
@@ -101,6 +123,7 @@
         </div>
       </div>
     </section>
+
 
     <!-- Fuel Companies Section (CrypGo-inspired) -->
     <section class="companies-section">
@@ -232,6 +255,11 @@ const latestPosts = getLatestPosts(3)
 
 const fuelType = ref('eurodiesel')
 const liters = ref(50)
+
+const currentDateFormated = new Intl.DateTimeFormat('sr-RS', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date('2026-09-09'))
+const todayDieselPrice = ref('195.0')
+const todayPetrolPrice = ref('184.0')
+const todayLpgPrice = ref('85.0')
 
 const fuelCompanies = ref([
   {
@@ -471,6 +499,73 @@ const tripCost = computed(() => {
 }
 .btn-outline-lg:hover {
   background: var(--primary-subtle);
+}
+
+/* Hero Today Prices UI */
+.hero-today-prices {
+  margin-top: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 24px var(--shadow-color);
+}
+.htp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+.htp-title {
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+.htp-date {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.htp-date strong {
+  color: var(--primary);
+  font-weight: 700;
+  margin-left: 4px;
+}
+.htp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.htp-item {
+  display: flex;
+  flex-direction: column;
+}
+.htp-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.htp-value {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.htp-value small {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .htp-grid {
+    gap: 12px;
+  }
+  .htp-value {
+    font-size: 1.4rem;
+  }
 }
 
 /* Widget */

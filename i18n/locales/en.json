@@ -389,5 +389,9 @@
     "item2": "OMV rolling out new premium diesel discounts for loyalty members.",
     "item3": "EV charging network expanding with 50 new ultra-fast chargers in 2026.",
     "item4": "LPG remains stable at 85 RSD/L heading into the summer season."
+  },
+  "todayPrices": {
+    "title": "Today's Average Prices",
+    "dateValid": "Valid for:"
   }
 }

@@ -389,5 +389,9 @@
     "item2": "OMV nudi nove popuste na premium dizel za članove lojalnosti.",
     "item3": "Mreža EV punjača se širi sa 50 novih ultra-brzih punjača u 2026.",
     "item4": "Autogas ostaje stabilan na 85 RSD/L pred letnju sezonu."
+  },
+  "todayPrices": {
+    "title": "Današnje prosečne cene",
+    "dateValid": "Na dan:"
   }
 }

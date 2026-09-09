@@ -2,8 +2,15 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css', '~/assets/css/animations.css'],
-  modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap'],
   devtools: { enabled: false },
+  site: {
+    url: 'https://123fuel.rs', // Example production URL for sitemap
+    name: '1-2-3 Fuel Serbia'
+  },
+  sitemap: {
+    autoI18n: true
+  },
   i18n: {
     locales: [
       {
@@ -24,17 +31,12 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: '1-2-3 Fuel Serbia',
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
-        { name: 'description', content: 'Track gas prices in Serbia seamlessly.' }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' }
       ],
       link: [
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap' },
-        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' },
-        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' },
-        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap' }
       ]
     }
   },

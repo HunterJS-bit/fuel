@@ -42,11 +42,12 @@ export function getSamplePrice(station: MapStation, filter: FuelFilter): number 
 }
 
 export function getMaxMarkersForZoom(zoom: number): number {
-  if (zoom <= 7) return 30
-  if (zoom <= 9) return 80
-  if (zoom <= 11) return 200
-  if (zoom <= 13) return 500
-  return 2000
+  if (zoom <= 6) return 20
+  if (zoom <= 7) return 40
+  if (zoom <= 9) return 100
+  if (zoom <= 11) return 250
+  if (zoom <= 13) return 600
+  return 1500
 }
 
 interface BoundsLike {

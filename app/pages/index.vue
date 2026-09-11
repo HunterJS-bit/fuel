@@ -251,6 +251,17 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { getLatestPosts } from '~/data/blogPosts'
 import { geocodeAddress, fetchRoute } from '~/utils/geocoding'
 
+const { t } = useI18n()
+
+useHead({
+  title: computed(() => `${t('hero.titlePre')} ${t('hero.titleHighlight')} ${t('hero.titlePost')}`.trim() + ' | 1-2-3 Fuel'),
+  meta: [
+    { name: 'description', content: computed(() => t('hero.subtitle')) },
+    { property: 'og:title', content: computed(() => `${t('hero.titlePre')} ${t('hero.titleHighlight')} ${t('hero.titlePost')}`.trim()) },
+    { property: 'og:description', content: computed(() => t('hero.subtitle')) }
+  ]
+})
+
 const latestPosts = getLatestPosts(3)
 
 const fuelType = ref('eurodiesel')

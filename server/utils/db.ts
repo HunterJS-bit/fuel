@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3'
 import { resolve } from 'path'
 import { promisify } from 'util'
+import { consola } from 'consola'
 
 // Enable verbose mode for better error messages in development
 const sqlite = sqlite3.verbose()
@@ -12,12 +13,13 @@ let dbInstance: sqlite3.Database | null = null
  */
 export function getDb(): sqlite3.Database {
     if (!dbInstance) {
-        const dbPath = resolve(process.cwd(), 'stations.db')
+        const dbFileName = process.env.DATABASE_URL || 'stations.db'
+        const dbPath = resolve(process.cwd(), dbFileName)
         dbInstance = new sqlite.Database(dbPath, (err) => {
             if (err) {
-                console.error('Error connecting to the SQLite database:', err.message)
+                consola.error('Error connecting to the SQLite database:', err.message)
             } else {
-                console.log('Connected to the SQLite database.')
+                consola.success('Connected to the SQLite database.')
             }
         })
     }

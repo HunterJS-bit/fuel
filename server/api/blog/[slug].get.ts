@@ -1,6 +1,6 @@
 import { getBlogPost } from '../../utils/blog'
 
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
   const query = getQuery(event)
   const locale = String(query.locale ?? 'en')

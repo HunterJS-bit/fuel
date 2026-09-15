@@ -1,6 +1,6 @@
 import { getAllTags, getBlogPosts } from '../../utils/blog'
 
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const query = getQuery(event)
   const locale = String(query.locale ?? 'en')
 

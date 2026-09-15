@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css', '~/assets/css/animations.css'],
-  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', 'nuxt-security'],
   devtools: { enabled: false },
   site: {
     url: 'https://123fuel.rs', // Example production URL for sitemap

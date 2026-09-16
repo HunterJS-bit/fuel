@@ -16,20 +16,42 @@ export interface Station {
 
 export async function fetchStations(): Promise<Station[]> {
   try {
-    // Import the stations data from the JSON file
+    // Fetch stations from the backend API (SQLite DB)
+    const response = await fetch('/api/stations')
+    if (!response.ok) {
+      throw new Error(`Failed to fetch stations: ${response.status}`)
+    }
+    const data = await response.json()
+    // Map DB rows to Station interface
+    const stations: Station[] = data.map((row: any) => ({
+      id: row.id,
+      name: row.name,
+      brand: row.brand,
+      address: row.address,
+      city: row.city,
+      hours: row.hours,
+      latitude: row.latitude,
+      longitude: row.longitude,
+      fuels: row.fuel_type ? row.fuel_type.split(',').map((s: string) => s.trim()) : [],
+      price: row.price,
+      type: row.station_type,
+      dist: Math.random() * 5 + 0.5,
+    }))
+    console.log(`Loaded ${stations.length} stations from SQLite DB via API`)
+    return stations
     const stationsData = await import('~/data/stations.json')
-    
+
     if (!stationsData.default || !Array.isArray(stationsData.default)) {
       throw new Error('Invalid stations data format')
     }
-    
+
     // Add sample prices for now (in production, fetch from cenagoriva.rs)
     const mappedStations = stationsData.default.map((s: any, index: number) => {
       if (!s.id || !s.latitude || !s.longitude) {
         console.warn(`Invalid station data at index ${index}:`, s)
         return null
       }
-      
+
       return {
         id: s.id,
         name: s.name || 'Unknown Station',
@@ -41,17 +63,17 @@ export async function fetchStations(): Promise<Station[]> {
         longitude: s.longitude,
         fuels: Array.isArray(s.fuels) ? s.fuels : [],
         // Add sample price based on fuel type
-        price: s.fuels?.includes('Euro Diesel') ? 195.0 : 
-               s.fuels?.includes('BMB 95') ? 186.0 : 
-               s.fuels?.includes('TNG/LPG') ? 89.0 : 190.0,
+        price: s.fuels?.includes('Euro Diesel') ? 195.0 :
+          s.fuels?.includes('BMB 95') ? 186.0 :
+            s.fuels?.includes('TNG/LPG') ? 89.0 : 190.0,
         // For compatibility with existing code
-        type: s.brand?.includes('NIS') ? 'NIS' : 
-               s.brand?.includes('OMV') ? 'OMV' : 
-               s.brand?.includes('MOL') ? 'MOL' : 'Eco',
+        type: s.brand?.includes('NIS') ? 'NIS' :
+          s.brand?.includes('OMV') ? 'OMV' :
+            s.brand?.includes('MOL') ? 'MOL' : 'Eco',
         dist: Math.random() * 5 + 0.5 // Random distance for demo
       }
     })
-    
+
     const stations = mappedStations.filter((s): s is NonNullable<typeof mappedStations[number]> => s !== null)
 
     console.log(`Loaded ${stations.length} valid stations from JSON file`)

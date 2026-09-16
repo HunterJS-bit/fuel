@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const query = getQuery(event)
   const fromLat = parseFloat(query.fromLat as string)
   const fromLon = parseFloat(query.fromLon as string)

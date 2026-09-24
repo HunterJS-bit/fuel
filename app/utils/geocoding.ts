@@ -10,14 +10,73 @@ export interface RouteResult {
   durationMin: number
 }
 
+interface CacheEntry<T> {
+  data: T
+  timestamp: number
+  ttl: number
+}
+
+const GEOCODE_TTL = 60 * 60 * 1000 // 1 hour
+const ROUTE_TTL = 30 * 60 * 1000 // 30 minutes
+
+function getFromCache<T>(key: string): T | null {
+  if (!process.client) return null
+  
+  try {
+    const cached = localStorage.getItem(key)
+    if (!cached) return null
+    
+    const entry: CacheEntry<T> = JSON.parse(cached)
+    const now = Date.now()
+    
+    if (now - entry.timestamp > entry.ttl) {
+      localStorage.removeItem(key)
+      return null
+    }
+    
+    return entry.data
+  } catch {
+    return null
+  }
+}
+
+function setCache<T>(key: string, data: T, ttl: number): void {
+  if (!process.client) return
+  
+  try {
+    const entry: CacheEntry<T> = {
+      data,
+      timestamp: Date.now(),
+      ttl
+    }
+    localStorage.setItem(key, JSON.stringify(entry))
+  } catch (error) {
+    console.warn('Failed to cache data:', error)
+  }
+}
+
 export async function geocodeAddress(query: string): Promise<GeocodeResult[]> {
   if (!query.trim()) return []
+  
+  const cacheKey = `geocode:${query.toLowerCase()}`
+  const cached = getFromCache<GeocodeResult[]>(cacheKey)
+  
+  if (cached) {
+    return cached
+  }
+  
   try {
     const data = await $fetch<GeocodeResult[]>('/api/geocode', { 
       query: { q: query },
       timeout: 10000
     })
-    return data || []
+    const results = data || []
+    
+    if (results.length > 0) {
+      setCache(cacheKey, results, GEOCODE_TTL)
+    }
+    
+    return results
   } catch (error) {
     console.error('Geocoding error:', error)
     return []
@@ -30,8 +89,15 @@ export async function fetchRoute(
   toLat: number,
   toLon: number
 ): Promise<RouteResult | null> {
+  const cacheKey = `route:${fromLat.toFixed(4)},${fromLon.toFixed(4)}:${toLat.toFixed(4)},${toLon.toFixed(4)}`
+  const cached = getFromCache<RouteResult>(cacheKey)
+  
+  if (cached) {
+    return cached
+  }
+  
   try {
-    return await $fetch<RouteResult>('/api/route', {
+    const result = await $fetch<RouteResult>('/api/route', {
       query: {
         fromLat,
         fromLon,
@@ -39,6 +105,12 @@ export async function fetchRoute(
         toLon
       }
     })
+    
+    if (result) {
+      setCache(cacheKey, result, ROUTE_TTL)
+    }
+    
+    return result
   } catch {
     return null
   }

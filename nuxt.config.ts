@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css', '~/assets/css/animations.css'],
-  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', 'nuxt-security'],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', 'nuxt-security', '@nuxt/image'],
   devtools: { enabled: false },
   site: {
     url: 'https://123fuel.rs', // Example production URL for sitemap
@@ -41,6 +41,19 @@ export default defineNuxtConfig({
     }
   },
   compatibilityDate: '2024-11-01',
+  image: {
+    quality: 80,
+    format: ['webp', 'avif', 'jpeg'],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536
+    },
+    domains: ['unpkg.com']
+  },
   vite: {
     optimizeDeps: {
       // exclude: ['vue-router'],

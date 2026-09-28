@@ -350,6 +350,7 @@
     "badge": "Mreža EV punjenja",
     "title": "Pronađite EV stanice za punjenje",
     "subtitle": "Locirajte brze punjače, Tesla Superchargere i AC tačke širom Srbije.",
+    "loadingMap": "Učitavanje mape...",
     "searchPlaceholder": "Pretražite grad, mrežu ili adresu...",
     "legend": "Tipovi punjača",
     "getDirections": "Navigacija",

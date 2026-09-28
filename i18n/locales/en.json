@@ -347,18 +347,19 @@
     }
   },
   "charging": {
-    "badge": "EV Charging Network",
-    "title": "Find EV Charging Stations",
-    "subtitle": "Locate fast chargers, Tesla Superchargers, and AC points across Serbia.",
-    "searchPlaceholder": "Search city, network, or address...",
-    "legend": "Charger types",
-    "getDirections": "Get Directions",
-    "noResults": "No charging stations match your filters.",
+    "badge": "EV Charging",
+    "title": "EV Charging Stations",
+    "subtitle": "Find electric vehicle charging points across Serbia with real-time availability and power ratings.",
+    "loadingMap": "Loading map...",
     "stats": {
       "stations": "Stations",
       "available": "Available",
-      "maxPower": "Max power"
+      "maxPower": "Max Power"
     },
+    "searchPlaceholder": "Search stations...",
+    "legend": "Charger types",
+    "getDirections": "Get Directions",
+    "noResults": "No charging stations match your filters.",
     "filters": {
       "all": "All"
     },

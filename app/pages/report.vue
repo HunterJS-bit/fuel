@@ -68,9 +68,10 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="btn-submit">
-              {{ $t('report.form.submit') }}
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
+            <button type="submit" class="btn-submit" :disabled="isSubmitting">
+              <span v-if="isSubmitting" class="spinner"></span>
+              <span v-else>{{ $t('report.form.submit') }}</span>
+              <svg v-if="!isSubmitting" viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/></svg>
             </button>
           </form>
           
@@ -99,20 +100,30 @@ const formData = ref({
 })
 
 const submitted = ref(false)
+const isSubmitting = ref(false)
 
-const handleSubmit = () => {
-  console.log('Price Reported:', formData.value)
-  submitted.value = true
-  formData.value = {
-    brand: '',
-    location: '',
-    fuelType: '',
-    price: '',
-    notes: ''
+const handleSubmit = async () => {
+  isSubmitting.value = true
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log('Price Reported:', formData.value)
+    submitted.value = true
+    formData.value = {
+      brand: '',
+      location: '',
+      fuelType: '',
+      price: '',
+      notes: ''
+    }
+    setTimeout(() => {
+      submitted.value = false
+    }, 5000)
+  } catch (error) {
+    console.error('Submission error:', error)
+  } finally {
+    isSubmitting.value = false
   }
-  setTimeout(() => {
-    submitted.value = false
-  }, 5000)
 }
 </script>
 
@@ -231,6 +242,23 @@ const handleSubmit = () => {
   transform: translateY(-2px);
   filter: brightness(1.06);
   box-shadow: 0 8px 28px var(--primary-glow);
+}
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 .success-message {
   margin-top: 24px;

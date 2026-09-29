@@ -132,6 +132,10 @@
     <div class="map-section">
       <ClientOnly>
         <div id="charging-map"></div>
+        <div v-if="isMapLoading" class="map-loading-overlay">
+          <div class="spinner-large"></div>
+          <p>{{ $t('charging.loadingMap') }}</p>
+        </div>
       </ClientOnly>
 
       <div class="map-legend glass-panel">
@@ -157,6 +161,7 @@ const activeFilter = ref('all')
 const selectedStationId = ref(null)
 const hoveredStationId = ref(null)
 const stations = ref(chargingData)
+const isMapLoading = ref(true)
 
 let leafletMap = null
 let markers = {}
@@ -286,6 +291,7 @@ onMounted(async () => {
   mutationObserver.observe(document.documentElement, { attributes: true })
 
   renderMarkers(L)
+  isMapLoading.value = false
 })
 
 const renderMarkers = (L) => {
@@ -658,6 +664,40 @@ onUnmounted(() => {
 #charging-map {
   width: 100%;
   height: 100%;
+}
+
+.map-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 10;
+}
+
+.spinner-large {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+.map-loading-overlay p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .map-legend {

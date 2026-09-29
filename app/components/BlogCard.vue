@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/blog/${post.slug}`" class="blog-card">
-    <div class="card-image" :style="{ backgroundImage: `url(https://placehold.co/600x400/1e293b/fff?text=${post.slug})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+    <div class="card-image" :style="{ background: post.imageGradient }">
       <span class="card-category">{{ $t(post.categoryKey) }}</span>
     </div>
     <div class="card-body">
@@ -64,6 +64,7 @@ const formattedDate = computed(() => {
   display: flex;
   align-items: flex-end;
   padding: 16px;
+  min-height: 160px;
 }
 .card-category {
   background: rgba(0, 0, 0, 0.45);

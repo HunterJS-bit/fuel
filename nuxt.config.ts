@@ -54,6 +54,15 @@ export default defineNuxtConfig({
     },
     domains: ['unpkg.com']
   },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': ["'self'", 'data:', 'https://*.openstreetmap.org', 'https://server.arcgisonline.com', 'https://unpkg.com'],
+      },
+      referrerPolicy: 'no-referrer-when-downgrade',
+      crossOriginEmbedderPolicy: 'unsafe-none'
+    }
+  },
   vite: {
     optimizeDeps: {
       // exclude: ['vue-router'],

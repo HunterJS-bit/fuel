@@ -1,30 +1,22 @@
 # Use Node.js 20 Alpine for smaller image size
 FROM node:20-alpine
 
-# Install SQLite and build dependencies required for the sqlite3 Node.js driver
-RUN apk add --no-cache sqlite python3 make g++
-
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package files
 COPY package*.json ./
 
-# Install project dependencies
-RUN npm install
+# Install production dependencies
+RUN npm ci --only=production
 
-# Copy all project files, including stations.db
-COPY . .
+# Copy pre-built output (build locally first)
+COPY .output ./.output
+COPY public ./public
 
-# Build the Nuxt 3 application
-RUN npm run build
-
-# Expose the application port
 EXPOSE 3000
 
-# Configure host to 0.0.0.0 for Docker networking and define default port
 ENV HOST=0.0.0.0
 ENV PORT=3000
+ENV NODE_ENV=production
 
-# Run the compiled Nuxt 3 application
 CMD ["node", ".output/server/index.mjs"]

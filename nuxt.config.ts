@@ -2,10 +2,16 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   css: ['~/assets/css/index.css', '~/assets/css/animations.css'],
-  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', 'nuxt-security', '@nuxt/image'],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxt/image'],
   devtools: { enabled: false },
+  nitro: {
+    preset: 'static',
+    output: {
+      dir: 'dist'
+    }
+  },
   site: {
-    url: 'https://123fuel.rs', // Example production URL for sitemap
+    url: 'https://123fuel.rs',
     name: '1-2-3 Fuel Serbia'
   },
   sitemap: {
@@ -25,7 +31,6 @@ export default defineNuxtConfig({
       }
     ],
     defaultLocale: 'sr',
-    lazy: true,
     langDir: 'locales',
     strategy: 'prefix_except_default'
   },
@@ -38,6 +43,12 @@ export default defineNuxtConfig({
       link: [
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap' }
       ]
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE_URL || 'http://localhost:4000'
     }
   },
   compatibilityDate: '2024-11-01',
@@ -54,18 +65,8 @@ export default defineNuxtConfig({
     },
     domains: ['unpkg.com']
   },
-  security: {
-    headers: {
-      contentSecurityPolicy: {
-        'img-src': ["'self'", 'data:', 'https://*.openstreetmap.org', 'https://server.arcgisonline.com', 'https://unpkg.com'],
-      },
-      referrerPolicy: 'no-referrer-when-downgrade',
-      crossOriginEmbedderPolicy: 'unsafe-none'
-    }
-  },
   vite: {
     optimizeDeps: {
-      // exclude: ['vue-router'],
       include: ['leaflet', 'leaflet.markercluster']
     }
   }

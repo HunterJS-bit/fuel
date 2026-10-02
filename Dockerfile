@@ -6,12 +6,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies
-RUN npm ci --only=production
+# Install all dependencies (needed for build)
+RUN npm ci
 
-# Copy pre-built output (build locally first)
-COPY .output ./.output
-COPY public ./public
+# Copy source files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Remove dev dependencies to reduce image size
+RUN npm prune --production
 
 EXPOSE 3000
 

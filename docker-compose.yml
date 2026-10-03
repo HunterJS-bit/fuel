@@ -1,11 +1,41 @@
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./data:/app/data
-    environment:
-      - DATABASE_URL=./data/stations.db
-    # Task 5: Process management & container restart
+  postgres:
+    image: postgres:16-alpine
+    container_name: fuelcalc-postgres
     restart: unless-stopped
+    environment:
+      POSTGRES_USER: fuelcalc
+      POSTGRES_PASSWORD: fuelcalc
+      POSTGRES_DB: fuelcalc
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./scripts/stations_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+      - ./scripts/seed-prices.sql:/docker-entrypoint-initdb.d/03_prices.sql:ro
+
+  api:
+    build: ./api-server
+    ports:
+      - '4000:4000'
+    environment:
+      - DATABASE_URL=postgresql://fuelcalc:fuelcalc@postgres:5432/fuelcalc
+      - PORT=4000
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend-server
+    ports:
+      - '3000:3000'
+    environment:
+      - API_BASE_URL=http://api:4000
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

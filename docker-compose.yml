@@ -24,6 +24,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://fuelcalc:fuelcalc@postgres:5432/fuelcalc
       - PORT=4000
+    command: npm run start
     depends_on:
       postgres:
         condition: service_started

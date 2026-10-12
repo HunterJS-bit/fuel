@@ -1,15 +1,34 @@
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import stationsRouter from './routes/stations.js'
-import fuelPricesRouter from './routes/fuel-prices.js'
-import geocodeRouter from './routes/geocode.js'
-import routeRouter from './routes/route.js'
+import { logger } from './utils/logger.js'
+import stationsRouter from './routes/stations'
+import fuelPricesRouter from './routes/fuel-prices'
+import providersRouter from './routes/providers'
+import geocodeRouter from './routes/geocode'
+import routeRouter from './routes/route'
 
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 3002
+const PORT = process.env.PORT || 4000
+
+// Request logging middleware
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const start = Date.now()
+  
+  res.on('finish', () => {
+    const duration = Date.now() - start
+    logger.info(`${req.method} ${req.path}`, {
+      statusCode: res.statusCode,
+      duration: `${duration}ms`,
+      ip: req.ip
+    })
+  })
+  
+  next()
+})
+
 // Middleware
 app.use(cors())
 app.use(express.json())
@@ -17,6 +36,7 @@ app.use(express.json())
 // Routes
 app.use('/api/stations', stationsRouter)
 app.use('/api/fuel-prices', fuelPricesRouter)
+app.use('/api/providers', providersRouter)
 app.use('/api/geocode', geocodeRouter)
 app.use('/api/route', routeRouter)
 
@@ -37,6 +57,7 @@ app.get('/', (req: Request, res: Response) => {
       'GET /api/fuel-prices',
       'GET /api/fuel-prices/latest',
       'GET /api/fuel-prices/brand/:brand',
+      'GET /api/providers',
       'GET /api/geocode',
       'GET /api/route',
       'GET /health'
@@ -44,13 +65,33 @@ app.get('/', (req: Request, res: Response) => {
   })
 })
 
-// Error handling
+// 404 handler
+app.use((req: Request, res: Response) => {
+  logger.warn(`Route not found: ${req.method} ${req.path}`)
+  res.status(404).json({ error: 'Route not found' })
+})
+
+// Global error handling
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack)
-  res.status(500).json({ error: 'Internal server error' })
+  logger.error('Unhandled error', err, {
+    path: req.path,
+    method: req.method,
+    ip: req.ip
+  })
+  
+  // Don't expose error details in production
+  const isDevelopment = process.env.NODE_ENV !== 'production'
+  
+  res.status(500).json({
+    error: 'Internal server error',
+    ...(isDevelopment && { message: err.message, stack: err.stack })
+  })
 })
 
 app.listen(PORT, () => {
-  console.log(`FuelCalc API server running on port ${PORT}`)
-  console.log(`Database: ${process.env.DATABASE_URL?.split('@')[1] || 'local'}`)
+  logger.info(`FuelCalc API server starting`, {
+    port: PORT,
+    environment: process.env.NODE_ENV || 'development',
+    database: process.env.DATABASE_URL?.split('@')[1] || 'local'
+  })
 })

@@ -2,11 +2,11 @@ import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { logger } from './utils/logger.js'
-import stationsRouter from './routes/stations'
-import fuelPricesRouter from './routes/fuel-prices'
-import providersRouter from './routes/providers'
-import geocodeRouter from './routes/geocode'
-import routeRouter from './routes/route'
+import stationsRouter from './routes/stations.js'
+import fuelPricesRouter from './routes/fuel-prices.js'
+import providersRouter from './routes/providers.js'
+import geocodeRouter from './routes/geocode.js'
+import routeRouter from './routes/route.js'
 
 dotenv.config()
 

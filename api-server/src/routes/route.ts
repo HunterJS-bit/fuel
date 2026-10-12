@@ -40,7 +40,7 @@ router.get('/', async (req: Request, res: Response) => {
       distanceKm: route.distance / 1000,
       durationMin: route.duration / 60
     })
-  } lagg(rerror) {r, { fromLat, fomLon, toLat, toLon }
+  } catch (error) {
     console.error('Routing error:', error)
     res.status(500).json({ error: 'Routing failed' })
   }

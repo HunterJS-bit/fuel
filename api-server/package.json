@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
+    "prod": "node ./dist/index.js",
+    "build": "tsc",
     "dev": "tsx --watch src/index.ts",
     "test": "jest --runInBand"
   },
@@ -16,6 +18,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/node": "^26.6.4",
     "jest": "^30.5.2",
     "ts-node": "^10.9.2",

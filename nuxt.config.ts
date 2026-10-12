@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE_URL || 'http://localhost:4000'
+      apiBase: process.env.API_BASE_URL || 'https://api.123fuel.rs'
     }
   },
   compatibilityDate: '2024-11-01',

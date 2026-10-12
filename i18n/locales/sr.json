@@ -269,6 +269,7 @@
     "badge": "Provajderi Goriva",
     "title": "Provajderi Goriva u Srbiji",
     "subtitle": "Uporedite trenutne cene i istorijske trendove svih većih kompanija koje posluju u Srbiji.",
+    "loading": "Učitavanje dobavljača...",
     "cheapestFor": "Najjeftiniji za",
     "stations": "stanica",
     "viewOnMap": "Prikaži na mapi",

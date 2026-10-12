@@ -269,6 +269,7 @@
     "badge": "Gas Providers",
     "title": "Fuel Providers in Serbia",
     "subtitle": "Compare current prices and historical trends across all major fuel companies operating in Serbia.",
+    "loading": "Loading providers...",
     "cheapestFor": "Cheapest for",
     "stations": "Stations",
     "viewOnMap": "View on Map",

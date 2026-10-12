@@ -50,7 +50,7 @@ jobs:
         with:
           context: ./api-server
           push: true
-          tags: ghcr.io/${{ github.repository }}-api:latest
+          tags: ghcr.io/${{ github.repository_owner }}/fuel-api:latest
 
       - name: Trigger Dokploy deployment
         env:

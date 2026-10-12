@@ -53,14 +53,31 @@ jobs:
           push: true
           tags: ghcr.io/hunterjs-bit/fuel-api:latest
 
+      - name: Check Dokploy secrets
+        if: success()
+        run: |
+          echo "DOKPLOY_URL is set: $([ -n "$DOKPLOY_URL" ] && echo "yes" || echo "no")"
+          echo "DOKPLOY_API_KEY is set: $([ -n "$DOKPLOY_API_KEY" ] && echo "yes" || echo "no")"
+          echo "DOKPLOY_APP_ID is set: $([ -n "$DOKPLOY_APP_ID" ] && echo "yes" || echo "no")"
+        env:
+          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DOKPLOY_APP_ID: ${{ secrets.DOKPLOY_APP_ID }}
+
       - name: Trigger Dokploy deployment
+        if: success()
+        continue-on-error: true
         env:
           DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
           DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
           DOKPLOY_APP_ID: ${{ secrets.DOKPLOY_APP_ID }}
         run: |
-          curl --fail --request POST \
-            --url "$DOKPLOY_URL/api/application.deploy" \
-            --header "x-api-key: $DOKPLOY_API_KEY" \
-            --header "Content-Type: application/json" \
-            --data "{\"applicationId\":\"$DOKPLOY_APP_ID\"}"
+          if [ -n "$DOKPLOY_URL" ] && [ -n "$DOKPLOY_API_KEY" ] && [ -n "$DOKPLOY_APP_ID" ]; then
+            curl --fail --request POST \
+              --url "$DOKPLOY_URL/api/application.deploy" \
+              --header "x-api-key: $DOKPLOY_API_KEY" \
+              --header "Content-Type: application/json" \
+              --data "{\"applicationId\":\"$DOKPLOY_APP_ID\"}" || echo "Dokploy deployment trigger failed"
+          else
+            echo "Dokploy secrets not configured, skipping deployment trigger"
+          fi

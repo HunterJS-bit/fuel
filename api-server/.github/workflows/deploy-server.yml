@@ -22,14 +22,18 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: api-server/package-lock.json
 
       - name: Install dependencies
+        working-directory: ./api-server
         run: npm ci
 
       - name: Run tests
+        working-directory: ./api-server
         run: npm test -- --runInBand
 
       - name: Build application
+        working-directory: ./api-server
         run: npm run build --if-present
 
       - name: Log in to GitHub Container Registry

@@ -152,7 +152,7 @@
 <script setup>
 definePageMeta({ layout: 'landing' })
 
-import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
+import { ref, computed, onMounted, watch, onUnmounted, nextTick } from 'vue'
 import chargingData from '~/data/chargingStations.json'
 import { chargerConfig, getAvailabilityStatus, buildMarkerHtml } from '~/utils/chargingMarkers'
 
@@ -238,7 +238,11 @@ watch([selectedStationId, hoveredStationId], updateMarkerStyles)
 onMounted(async () => {
   if (!process.client) return
 
-  const L = await import('leaflet')
+  await nextTick()
+
+  const L_mod = await import('leaflet')
+  const L = L_mod.default || L_mod
+  await import('leaflet/dist/leaflet.css')
   delete L.Icon.Default.prototype._getIconUrl
   L.Icon.Default.mergeOptions({
     iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',

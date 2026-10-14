@@ -32,15 +32,6 @@ services:
     networks:
       - postgres-network
     restart: unless-stopped
-  # frontend:
-  #   build: ./frontend-server
-  #   ports:
-  #     - '3000:3000'
-  #   environment:
-  #     - API_BASE_URL=http://api:4000
-  #   depends_on:
-  #     - api
-  #   restart: unless-stopped
 
   adminer:
     image: adminer:5.2.1

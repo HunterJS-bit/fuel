@@ -66,7 +66,10 @@ export async function geocodeAddress(query: string): Promise<GeocodeResult[]> {
   }
   
   try {
-    const data = await $fetch<GeocodeResult[]>('/api/geocode', { 
+    const config = useRuntimeConfig()
+    const apiBase = config.public.apiBase as string
+    
+    const data = await $fetch<GeocodeResult[]>(`${apiBase}/api/geocode`, { 
       query: { q: query },
       timeout: 10000
     })
@@ -97,7 +100,10 @@ export async function fetchRoute(
   }
   
   try {
-    const result = await $fetch<RouteResult>('/api/route', {
+    const config = useRuntimeConfig()
+    const apiBase = config.public.apiBase as string
+    
+    const result = await $fetch<RouteResult>(`${apiBase}/api/route`, {
       query: {
         fromLat,
         fromLon,

@@ -1,93 +1,75 @@
-// Utility to fetch gas station data from local JSON file
-export interface Station {
-  id: string
-  name: string
-  brand: string
-  address: string
-  city: string
-  hours: string
-  latitude: number
-  longitude: number
-  fuels: string[]
-  price?: number
-  type?: string
+import type { MapStation } from '~/utils/mapStations'
+import { getSamplePrice } from '~/utils/mapStations'
+
+export interface Station extends MapStation {
   dist?: number
+}
+
+function mapRowToStation(row: Record<string, unknown>): Station | null {
+  const id = row.id != null ? String(row.id) : ''
+  const latitude = Number(row.latitude)
+  const longitude = Number(row.longitude)
+
+  if (!id || !Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return null
+  }
+
+  const fuelType = row.fuel_type != null ? String(row.fuel_type) : ''
+  const fuels = fuelType
+    ? fuelType.split(',').map((s) => s.trim()).filter(Boolean)
+    : []
+
+  const brand = row.brand != null ? String(row.brand) : 'Unknown'
+
+  const station: Station = {
+    id,
+    name: row.name != null ? String(row.name) : 'Unknown Station',
+    brand,
+    address: row.address != null ? String(row.address) : '',
+    city: row.city != null ? String(row.city) : '',
+    hours: row.hours != null ? String(row.hours) : '',
+    latitude,
+    longitude,
+    fuels,
+    price: getSamplePrice({ id, fuels, brand } as MapStation, 'all'),
+    type: brand.includes('NIS') ? 'NIS'
+      : brand.includes('OMV') ? 'OMV'
+        : brand.includes('MOL') ? 'MOL'
+          : 'Eco',
+  }
+
+  return station
 }
 
 export async function fetchStations(): Promise<Station[]> {
   try {
-    // Fetch stations from the backend API (SQLite DB)
-    const response = await fetch('/api/stations')
-    if (!response.ok) {
-      throw new Error(`Failed to fetch stations: ${response.status}`)
-    }
-    const data = await response.json()
-    // Map DB rows to Station interface
-    const stations: Station[] = data.map((row: any) => ({
-      id: row.id,
-      name: row.name,
-      brand: row.brand,
-      address: row.address,
-      city: row.city,
-      hours: row.hours,
-      latitude: row.latitude,
-      longitude: row.longitude,
-      fuels: row.fuel_type ? row.fuel_type.split(',').map((s: string) => s.trim()) : [],
-      price: row.price,
-      type: row.station_type,
-      dist: Math.random() * 5 + 0.5,
-    }))
-    console.log(`Loaded ${stations.length} stations from SQLite DB via API`)
-    return stations
-    const stationsData = await import('~/data/stations.json')
+    const config = useRuntimeConfig()
+    const apiBase = config.public.apiBase as string
+    
+    const response = await $fetch<{ data: Record<string, unknown>[]; total: number }>(`${apiBase}/api/stations`)
 
-    if (!stationsData.default || !Array.isArray(stationsData.default)) {
-      throw new Error('Invalid stations data format')
+    if (!response || !Array.isArray(response.data)) {
+      throw new Error('Invalid stations response')
     }
 
-    // Add sample prices for now (in production, fetch from cenagoriva.rs)
-    const mappedStations = stationsData.default.map((s: any, index: number) => {
-      if (!s.id || !s.latitude || !s.longitude) {
-        console.warn(`Invalid station data at index ${index}:`, s)
-        return null
-      }
+    const stations = response.data
+      .map(mapRowToStation)
+      .filter((s): s is Station => s !== null)
 
-      return {
-        id: s.id,
-        name: s.name || 'Unknown Station',
-        brand: s.brand || 'Unknown',
-        address: s.address || '',
-        city: s.city || '',
-        hours: s.hours || '',
-        latitude: s.latitude,
-        longitude: s.longitude,
-        fuels: Array.isArray(s.fuels) ? s.fuels : [],
-        // Add sample price based on fuel type
-        price: s.fuels?.includes('Euro Diesel') ? 195.0 :
-          s.fuels?.includes('BMB 95') ? 186.0 :
-            s.fuels?.includes('TNG/LPG') ? 89.0 : 190.0,
-        // For compatibility with existing code
-        type: s.brand?.includes('NIS') ? 'NIS' :
-          s.brand?.includes('OMV') ? 'OMV' :
-            s.brand?.includes('MOL') ? 'MOL' : 'Eco',
-        dist: Math.random() * 5 + 0.5 // Random distance for demo
-      }
-    })
+    if (stations.length === 0) {
+      console.warn('No stations returned from database, using fallback')
+      return sampleStations
+    }
 
-    const stations = mappedStations.filter((s): s is NonNullable<typeof mappedStations[number]> => s !== null)
-
-    console.log(`Loaded ${stations.length} valid stations from JSON file`)
+    console.log(`Loaded ${stations.length} stations from API`)
     return stations
-
   } catch (error) {
-    console.error('Error loading stations:', error)
-    // Return fallback data instead of empty array
+    console.error('Error loading stations from API:', error)
     console.warn('Using fallback sample stations')
     return sampleStations
   }
 }
 
-// Fallback sample data if fetch fails
 export const sampleStations: Station[] = [
   {
     id: '1',

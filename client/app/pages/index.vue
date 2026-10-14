@@ -244,7 +244,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({ layout: 'landing' })
 
 import { ref, computed, watch, onMounted } from 'vue'
@@ -267,49 +267,57 @@ const latestPosts = getLatestPosts(3)
 const fuelType = ref('eurodiesel')
 const liters = ref(50)
 
-const currentDateFormated = new Intl.DateTimeFormat('sr-RS', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date('2026-09-09'))
-const todayDieselPrice = ref('195.0')
-const todayPetrolPrice = ref('184.0')
-const todayLpgPrice = ref('85.0')
+// Fetch live fuel prices from PostgreSQL
+type FuelPricesData = {
+  eurodiesel: Record<string, number>
+  bmb95: Record<string, number>
+  lpg: Record<string, number>
+  averages: { eurodiesel: number; bmb95: number; lpg: number }
+  validFrom: string | null
+}
 
-const fuelCompanies = ref([
-  {
-    id: 1, name: 'NIS Petrol', slug: 'nis', initials: 'NIS', color: '#0066cc',
-    fuelType: 'Euro Diesel', price: 195.0, change: 0.52, stations: 312,
-    sparkline: '0,28 20,22 40,18 60,24 80,12 100,16 120,8',
-    isLowest: false
-  },
-  {
-    id: 2, name: 'OMV', slug: 'omv', initials: 'OMV', color: '#003da5',
-    fuelType: 'Euro Diesel', price: 198.5, change: 1.24, stations: 89,
-    sparkline: '0,20 20,16 40,22 60,14 80,18 100,10 120,14',
-    isLowest: false
-  },
-  {
-    id: 3, name: 'Eco', slug: 'eco', initials: 'ECO', color: '#2ecc71',
-    fuelType: 'Euro Diesel', price: 194.0, change: -0.31, stations: 45,
-    sparkline: '0,24 20,20 40,16 60,20 80,14 100,18 120,10',
-    isLowest: true
-  },
-  {
-    id: 4, name: 'MOL', slug: 'mol', initials: 'MOL', color: '#00843d',
-    fuelType: 'Euro Diesel', price: 196.5, change: 0.78, stations: 67,
-    sparkline: '0,18 20,22 40,16 60,20 80,12 100,16 120,20',
-    isLowest: false
-  },
-  {
-    id: 5, name: 'Lukoil', slug: 'lukoil', initials: 'LK', color: '#e30613',
-    fuelType: 'Euro Diesel', price: 197.0, change: 0.45, stations: 52,
-    sparkline: '0,22 20,18 40,24 60,16 80,20 100,14 120,18',
-    isLowest: false
-  },
-  {
-    id: 6, name: 'Petrol', slug: 'petrol', initials: 'PT', color: '#ff6600',
-    fuelType: 'Euro Diesel', price: 196.0, change: -0.12, stations: 38,
-    sparkline: '0,16 20,20 40,14 60,18 80,22 100,16 120,12',
-    isLowest: false
-  }
-])
+const { data: pricesData } = await useAsyncData<FuelPricesData>('fuel-prices', () =>
+  $fetch(`${useRuntimeConfig().public.apiBase}/api/fuel-prices/latest`)
+)
+
+// Derived today's prices from the averages (or fallback)
+const todayDieselPrice = computed(() =>
+  (pricesData.value?.averages?.eurodiesel ?? 195.0).toFixed(1)
+)
+const todayPetrolPrice = computed(() =>
+  (pricesData.value?.averages?.bmb95 ?? 184.0).toFixed(1)
+)
+const todayLpgPrice = computed(() =>
+  (pricesData.value?.averages?.lpg ?? 85.0).toFixed(1)
+)
+
+const currentDateFormated = computed(() => {
+  const dateStr = pricesData.value?.validFrom
+  const date = dateStr ? new Date(dateStr) : new Date()
+  return new Intl.DateTimeFormat('sr-RS', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date)
+})
+
+// Company catalogue (static metadata) — prices come from DB
+const COMPANY_META = [
+  { id: 1, name: 'NIS Petrol', slug: 'nis', initials: 'NIS', color: '#0066cc', stations: 312, sparkline: '0,28 20,22 40,18 60,24 80,12 100,16 120,8', change: 0.52 },
+  { id: 2, name: 'OMV',        slug: 'omv', initials: 'OMV', color: '#003da5', stations: 89,  sparkline: '0,20 20,16 40,22 60,14 80,18 100,10 120,14', change: 1.24 },
+  { id: 3, name: 'Eco',        slug: 'eco', initials: 'ECO', color: '#2ecc71', stations: 45,  sparkline: '0,24 20,20 40,16 60,20 80,14 100,18 120,10', change: -0.31 },
+  { id: 4, name: 'MOL',        slug: 'mol', initials: 'MOL', color: '#00843d', stations: 67,  sparkline: '0,18 20,22 40,16 60,20 80,12 100,16 120,20', change: 0.78 },
+  { id: 5, name: 'Lukoil',     slug: 'lukoil', initials: 'LK', color: '#e30613', stations: 52, sparkline: '0,22 20,18 40,24 60,16 80,20 100,14 120,18', change: 0.45 },
+  { id: 6, name: 'Petrol',     slug: 'petrol', initials: 'PT', color: '#ff6600', stations: 38, sparkline: '0,16 20,20 40,14 60,18 80,22 100,16 120,12', change: -0.12 },
+]
+
+const fuelCompanies = computed(() => {
+  const diesel = pricesData.value?.eurodiesel ?? {}
+  const companies = COMPANY_META.map((c) => ({
+    ...c,
+    fuelType: 'Euro Diesel',
+    price: diesel[c.name] ?? (195.0 + c.id * 0.5),
+    isLowest: false,
+  }))
+  const minPrice = Math.min(...companies.map((c) => c.price))
+  return companies.map((c) => ({ ...c, isLowest: c.price === minPrice }))
+})
 
 const trustedBrands = ['NIS Petrol', 'OMV', 'MOL', 'Lukoil', 'Eco', 'Petrol']
 
@@ -402,15 +410,9 @@ onMounted(() => {
 
 const tripCost = computed(() => {
   const litersNeeded = (tripDistance.value / 100) * consumption.value
-  
-  // Fake getting cheapest price for selected fuel mode
-  const prices = fuelCompanies.value.map(c => {
-    let p = c.price
-    if (tripFuelType.value === 'bmb95') p -= 10
-    if (tripFuelType.value === 'lpg') p -= 110
-    return p
-  })
-  const cheapest = Math.min(...prices)
+  const fuelMap = pricesData.value?.[tripFuelType.value as 'eurodiesel' | 'bmb95' | 'lpg'] ?? {}
+  const prices = Object.values(fuelMap) as number[]
+  const cheapest = prices.length > 0 ? Math.min(...prices) : (tripFuelType.value === 'lpg' ? 85 : tripFuelType.value === 'bmb95' ? 184 : 195)
   return litersNeeded * cheapest
 })
 

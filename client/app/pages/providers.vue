@@ -11,64 +11,70 @@
     <!-- Provider Directory Table -->
     <section class="directory-section">
       <div class="section-inner">
-        <div class="providers-filters">
-          <div class="filter-group">
-            <label>{{ $t('providers.filterFuel', 'Fuel Type') }}</label>
-            <select v-model="filterFuel">
-               <option value="all">{{ $t('providers.allFuels', 'All Fuels') }}</option>
-               <option value="eurodiesel">Euro Diesel</option>
-               <option value="bmb95">BMB 95</option>
-               <option value="lpg">LPG</option>
-               <option value="bmb100">BMB 100</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label>{{ $t('providers.sortBy', 'Sort By') }}</label>
-            <select v-model="sortBy">
-               <option value="price_asc">{{ $t('providers.sortPriceAsc', 'Price: Low to High') }}</option>
-               <option value="price_desc">{{ $t('providers.sortPriceDesc', 'Price: High to Low') }}</option>
-               <option value="stations">{{ $t('providers.sortStations', 'Most Stations') }}</option>
-            </select>
-          </div>
+        <div v-if="loading" class="loading-state">
+          <div class="spinner"></div>
+          <p>{{ $t('providers.loading', 'Loading providers...') }}</p>
         </div>
-        <div class="table-container">
-          <table class="providers-table">
-            <thead>
-              <tr>
-                <th>{{ $t('providers.table.company') }}</th>
-                <th>{{ $t('providers.table.eurodiesel') }}</th>
-                <th>{{ $t('providers.table.bmb95') }}</th>
-                <th>{{ $t('providers.table.lpg') }}</th>
-                <th>{{ $t('providers.table.bmb100') }}</th>
-                <th>{{ $t('providers.table.stations') }}</th>
-                <th>{{ $t('providers.table.action') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="provider in filteredProviders" :key="provider.id" :class="{ 'best-price-row': provider.isLowest }">
-                <td>
-                  <div class="company-cell">
-                    <div class="company-logo" :style="{ background: provider.color }">{{ provider.initials }}</div>
-                    <div class="company-name">
-                      <strong>{{ provider.name }}</strong>
-                      <span v-if="provider.isLowest" class="lowest-badge">{{ $t('providers.cheapestFor') }} {{ provider.lowestFor }}</span>
+        <template v-else>
+          <!-- <div class="providers-filters">
+            <div class="filter-group">
+              <label>{{ $t('providers.filterFuel', 'Fuel Type') }}</label>
+              <select v-model="filterFuel">
+                 <option value="all">{{ $t('providers.allFuels', 'All Fuels') }}</option>
+                 <option value="eurodiesel">Euro Diesel</option>
+                 <option value="bmb95">BMB 95</option>
+                 <option value="lpg">LPG</option>
+                 <option value="bmb100">BMB 100</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>{{ $t('providers.sortBy', 'Sort By') }}</label>
+              <select v-model="sortBy">
+                 <option value="price_asc">{{ $t('providers.sortPriceAsc', 'Price: Low to High') }}</option>
+                 <option value="price_desc">{{ $t('providers.sortPriceDesc', 'Price: High to Low') }}</option>
+                 <option value="stations">{{ $t('providers.sortStations', 'Most Stations') }}</option>
+              </select>
+            </div>
+          </div> -->
+          <div class="table-container">
+            <!-- <table class="providers-table">
+              <thead>
+                <tr>
+                  <th>{{ $t('providers.table.company') }}</th>
+                  <th>{{ $t('providers.table.eurodiesel') }}</th>
+                  <th>{{ $t('providers.table.bmb95') }}</th>
+                  <th>{{ $t('providers.table.lpg') }}</th>
+                  <th>{{ $t('providers.table.bmb100') }}</th>
+                  <th>{{ $t('providers.table.stations') }}</th>
+                  <th>{{ $t('providers.table.action') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="provider in filteredProviders" :key="provider.id" :class="{ 'best-price-row': provider.isLowest }">
+                  <td>
+                    <div class="company-cell">
+                      <div class="company-logo" :style="{ background: provider.color }">{{ provider.initials }}</div>
+                      <div class="company-name">
+                        <strong>{{ provider.name }}</strong>
+                        <span v-if="provider.isLowest" class="lowest-badge">{{ $t('providers.cheapestFor') }} {{ provider.lowestFor }}</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td :class="{ 'cheapest-cell': provider.lowestFor === 'Euro Diesel' }">{{ provider.prices.eurodiesel.toFixed(1) }} <small>RSD</small></td>
-                <td :class="{ 'cheapest-cell': provider.lowestFor === 'BMB 95' }">{{ provider.prices.bmb95.toFixed(1) }} <small>RSD</small></td>
-                <td :class="{ 'cheapest-cell': provider.lowestFor === 'LPG' }">{{ provider.prices.lpg.toFixed(1) }} <small>RSD</small></td>
-                <td>{{ provider.prices.bmb100.toFixed(1) }} <small>RSD</small></td>
-                <td>{{ provider.stations }} <span class="stations-lbl">{{ $t('providers.stations') }}</span></td>
-                <td>
-                  <NuxtLink :to="`/nearby?provider=${provider.slug}`" class="view-btn">
-                    {{ $t('providers.viewOnMap') }}
-                  </NuxtLink>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  </td>
+                  <td :class="{ 'cheapest-cell': provider.lowestFor === 'Euro Diesel' }">{{ provider.prices.eurodiesel.toFixed(1) }} <small>RSD</small></td>
+                  <td :class="{ 'cheapest-cell': provider.lowestFor === 'BMB 95' }">{{ provider.prices.bmb95.toFixed(1) }} <small>RSD</small></td>
+                  <td :class="{ 'cheapest-cell': provider.lowestFor === 'LPG' }">{{ provider.prices.lpg.toFixed(1) }} <small>RSD</small></td>
+                  <td>{{ provider.prices.bmb100.toFixed(1) }} <small>RSD</small></td>
+                  <td>{{ provider.stations }} <span class="stations-lbl">{{ $t('providers.stations') }}</span></td>
+                  <td>
+                    <NuxtLink :to="`/nearby?provider=${provider.slug}`" class="view-btn">
+                      {{ $t('providers.viewOnMap') }}
+                    </NuxtLink>
+                  </td>
+                </tr>
+              </tbody>
+            </table> -->
+          </div>
+        </template>
       </div>
     </section>
 
@@ -96,9 +102,8 @@
   </div>
 </template>
 
-<script setup>
-definePageMeta({ layout: 'landing' })
-import { ref, computed } from 'vue'
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
 
 import {
   Chart as ChartJS,
@@ -112,6 +117,8 @@ import {
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import { useI18n } from 'vue-i18n'
+
+definePageMeta({ layout: 'landing' })
 
 ChartJS.register(
   CategoryScale,
@@ -127,18 +134,28 @@ const { t } = useI18n()
 
 const filterFuel = ref('all')
 const sortBy = ref('price_asc')
+const loading = ref(true)
 
-// Data
-const providersList = ref([
-  { id: 1, name: 'NIS Petrol', slug: 'nis', initials: 'NIS', color: '#0066cc', stations: 312, isLowest: false, lowestFor: null, prices: { eurodiesel: 195.0, bmb95: 185.0, lpg: 88.0, bmb100: 198.0 } },
-  { id: 2, name: 'OMV', slug: 'omv', initials: 'OMV', color: '#003da5', stations: 89, isLowest: false, lowestFor: null, prices: { eurodiesel: 198.5, bmb95: 187.5, lpg: 89.0, bmb100: 202.0 } },
-  { id: 3, name: 'Eco', slug: 'eco', initials: 'ECO', color: '#2ecc71', stations: 45, isLowest: true, lowestFor: 'Euro Diesel', prices: { eurodiesel: 194.0, bmb95: 184.0, lpg: 86.0, bmb100: 195.0 } },
-  { id: 4, name: 'MOL', slug: 'mol', initials: 'MOL', color: '#00843d', stations: 67, isLowest: false, lowestFor: null, prices: { eurodiesel: 196.5, bmb95: 186.0, lpg: 87.5, bmb100: 199.0 } },
-  { id: 5, name: 'Lukoil', slug: 'lukoil', initials: 'LK', color: '#e30613', stations: 52, isLowest: false, lowestFor: null, prices: { eurodiesel: 197.0, bmb95: 186.5, lpg: 88.5, bmb100: 200.0 } },
-  { id: 6, name: 'Petrol', slug: 'petrol', initials: 'PT', color: '#ff6600', stations: 38, isLowest: true, lowestFor: 'LPG', prices: { eurodiesel: 196.0, bmb95: 185.5, lpg: 85.5, bmb100: 198.5 } },
-  { id: 7, name: 'Knez Petrol', slug: 'knez', initials: 'KP', color: '#ffb300', stations: 40, isLowest: true, lowestFor: 'BMB 95', prices: { eurodiesel: 194.5, bmb95: 183.5, lpg: 87.0, bmb100: 196.0 } },
-  { id: 8, name: 'EKO', slug: 'eko', initials: 'EK', color: '#e5b80b', stations: 25, isLowest: false, lowestFor: null, prices: { eurodiesel: 195.5, bmb95: 184.5, lpg: 86.5, bmb100: 197.0 } }
-])
+// Data - fetched from API
+const providersList = ref([])
+
+// Fetch providers from API
+const fetchProviders = async () => {
+  try {
+    const config = useRuntimeConfig()
+    const apiBase = config.public.apiBase as string
+    const data = await $fetch(`${apiBase}/api/providers`)
+    providersList.value = data || []
+  } catch (error) {
+    console.error('Error fetching providers:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchProviders()
+})
 
 const activeChartFuel = ref('eurodiesel')
 
@@ -503,6 +520,30 @@ const chartOptions = {
   height: 400px;
   position: relative;
   box-shadow: 0 10px 40px var(--shadow-color);
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  gap: 16px;
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loading-state p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 900px) {

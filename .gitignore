@@ -23,3 +23,10 @@ logs
 .env.*
 !.env.example
 .vercel
+
+
+# API
+./api-server/.dist
+./api-server/node_modules
+./scripts
+scripts

@@ -183,7 +183,7 @@
         <button v-if="limit < filteredStations.length" class="load-more-btn" @click="limit += 20">
           {{ $t('nearby.loadMore') }}
         </button>
-        <p v-if="filteredStations.length === 0" class="empty-feed">{{ $t('nearby.noResults') }}</p>
+        <p v-if="stationsLoaded && filteredStations.length === 0" class="empty-feed">{{ $t('nearby.noResults') }}</p>
       </div>
     </aside>
 
@@ -203,7 +203,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'landing' })
 
-import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
+import { ref, computed, onMounted, watch, onUnmounted, nextTick } from 'vue'
 import { fetchStations } from '~/utils/fetchStations'
 import {
   priceTierConfig,
@@ -237,6 +237,7 @@ const stations = ref<Station[]>([])
 const selectedStationId = ref<string | null>(null)
 const hoveredStationId = ref<string | null>(null)
 const isMapLoading = ref(true)
+const stationsLoaded = ref(false)
 const limit = ref(20)
 
 const originQuery = ref('')
@@ -531,17 +532,23 @@ const updateMarkerIcons = () => {
 
     const tier = getStationTier(station)
     const isBest = station.id === bestId
-    const isSelected = station.id === selectedStationId.value
+    const isSelected = station.id === selectedStationId.value || station.id === hoveredStationId.value
 
-    const icon = L.divIcon({
-      className: 'fuel-charging-marker',
-      html: buildFuelMarkerHtml(station.price || 0, tier, isBest, isSelected),
-      iconSize: [48, 56],
-      iconAnchor: [24, 56]
-    })
-    
+    const html = buildFuelMarkerHtml(station.price || 0, tier, isBest, isSelected)
+
     // @ts-ignore
-    marker.setIcon(icon)
+    marker.options.icon.options.html = html
+
+    // @ts-ignore
+    const el = marker.getElement()
+    if (el) {
+      const innerMarker = el.querySelector('.fuel-marker')
+      if (innerMarker) {
+        const extra = [isBest ? 'best' : '', isSelected ? 'selected' : ''].filter(Boolean).join(' ')
+        innerMarker.className = `fuel-marker ${extra}`.trim()
+        innerMarker.setAttribute('data-tier', tier)
+      }
+    }
   })
 }
 
@@ -560,11 +567,17 @@ onMounted(async () => {
   if (!process.client) return
 
   stations.value = await fetchStations()
+  stationsLoaded.value = true
+
+  await nextTick()
 
   const L_mod = await import('leaflet')
   const L = L_mod.default || L_mod
   window.L = L
+  await import('leaflet/dist/leaflet.css')
   await import('leaflet.markercluster')
+  await import('leaflet.markercluster/dist/MarkerCluster.css')
+  await import('leaflet.markercluster/dist/MarkerCluster.Default.css')
 
   delete L.Icon.Default.prototype._getIconUrl
   L.Icon.Default.mergeOptions({
@@ -614,7 +627,15 @@ onMounted(async () => {
     chunkedLoading: true,
     maxClusterRadius: 45,
     spiderfyOnMaxZoom: true,
-    showCoverageOnHover: false
+    showCoverageOnHover: false,
+    iconCreateFunction: (cluster: any) => {
+      const count = cluster.getChildCount()
+      return L.divIcon({
+        html: `<div class="cluster-icon" style="background: var(--fuel-accent, #ff6b35); color: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: 700; font-size: 14px;">${count}</div>`,
+        className: 'custom-cluster-icon',
+        iconSize: L.point(36, 36)
+      })
+    }
   })
   leafletMap.addLayer(markerClusterGroup)
 

@@ -65,8 +65,6 @@ jobs:
           DOKPLOY_APP_ID: ${{ secrets.DOKPLOY_APP_ID }}
 
       - name: Trigger Dokploy deployment
-        if: success()
-        continue-on-error: true
         env:
           DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
           DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}

@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { logger } from './utils/logger.js'
+import { initializeDatabase, closeDatabase } from './db.js'
 import stationsRouter from './routes/stations.js'
 import fuelPricesRouter from './routes/fuel-prices.js'
 import providersRouter from './routes/providers.js'
@@ -88,10 +89,41 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   })
 })
 
-app.listen(PORT, () => {
-  logger.info(`FuelCalc API server starting`, {
-    port: PORT,
-    environment: process.env.NODE_ENV || 'development',
-    database: process.env.DATABASE_URL?.split('@')[1] || 'local'
+async function startServer() {
+  // Initialize database connection
+  logger.info('Initializing database connection...')
+  try {
+    await initializeDatabase()
+    logger.info('Database connection successful')
+  } catch (error) {
+    logger.error('Failed to connect to database. Please check DATABASE_URL environment variable.')
+    logger.error(`DATABASE_URL: ${process.env.DATABASE_URL ? '***SET***' : 'NOT SET'}`)
+    process.exit(1)
+  }
+
+  const server = app.listen(PORT, () => {
+    logger.info(`FuelCalc API server starting`, {
+      port: PORT,
+      environment: process.env.NODE_ENV || 'development',
+      database: process.env.DATABASE_URL?.split('@')[1] || 'local'
+    })
   })
+
+  // Graceful shutdown
+  const shutdown = async () => {
+    logger.info('Shutting down server...')
+    server.close(() => {
+      closeDatabase()
+      logger.info('Server shutdown complete')
+      process.exit(0)
+    })
+  }
+
+  process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
+}
+
+startServer().catch((error) => {
+  logger.error('Failed to start server', error)
+  process.exit(1)
 })

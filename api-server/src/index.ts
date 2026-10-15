@@ -14,6 +14,14 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 4000
 
+// Middleware
+app.use(cors({
+  origin: 'https://fuelcalc-mj4.pages.dev',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
+app.use(express.json())
+
 // Request logging middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
   const start = Date.now()
@@ -30,9 +38,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
-// Middleware
-app.use(cors())
-app.use(express.json())
 
 // Routes
 app.use('/api/stations', stationsRouter)

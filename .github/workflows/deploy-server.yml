@@ -72,7 +72,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{
               "applicationId": "${{ secrets.DOKPLOY_APP_ID }}",
-              "env": "PORT=4000\nDATABASE_URL=${{ secrets.DATABASE_URL }}\nNODE_ENV=production"
+              "env": "PORT=4000\nDATABASE_URL=${{ secrets.DATABASE_URL }}\nNODE_ENV=production/CLIENT_URL=https://fuelcalc-mj4.pages.dev"
             }'      
 
       - name: Trigger Dokploy deployment

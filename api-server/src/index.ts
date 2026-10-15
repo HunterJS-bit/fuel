@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 4000
 
 // Middleware
 app.use(cors({
-  origin: 'https://fuelcalc-mj4.pages.dev',
+  origin: process.env.CORS_ORIGIN || '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }))

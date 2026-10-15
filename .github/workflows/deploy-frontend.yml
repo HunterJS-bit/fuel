@@ -37,6 +37,12 @@ jobs:
       - name: Build Nuxt app
         run: npm run build
 
+      - name: Install Wrangler CLI
+        run: npm install -g wrangler 
+
+      - name: Debug Wrangler CLI
+        run: npx wrangler --version  
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
